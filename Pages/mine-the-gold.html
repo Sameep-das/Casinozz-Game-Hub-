@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mine The Gold | Casinozz</title>
+
+  <link rel="stylesheet" href="../CSS-FILES/casino-style.css">
+  <link rel="stylesheet" href="../CSS-FILES/game-pages.css">
+</head>
+<body>
+  <div class="whole-flex">
+    <nav class="nav-bar">
+      <a href="index.html" class="logo">Casinozz</a>
+      <ul class="nav-list">
+        <li><a href="index.html" target="_blank" class="nav-link">Home</a></li>
+        <li><a href="" class="nav-link">Settings</a></li>
+        <li><a href="login-signup.html" class="nav-link">Login</a></li>
+        <li><a href="" class="nav-link">Help</a></li>
+      </ul>
+    </nav>
+
+    <main class="glass main-section ftp-main-section">
+      <section class="game-page-section ftp-game-page-section">
+        <div class="victory-popup score-popup glass"></div>
+        <div class="defeat-popup score-popup glass">x0</div>
+        <div class="game-header ftp-game-header">
+          <h1>
+            <a href="mine-the-gold.html" class="logo">
+              Mine The Gold
+            </a>
+          </h1>
+
+          <div class="score-board">
+            <div class="score-icon gold-coin-icon"></div>
+            <div class="score">0</div>
+          </div>
+        </div>
+
+        <div class="pg-ftp">
+
+            <div class="mine-container-flex mine-glass">
+              <div class="flex-rows">
+                <div class="flex-cells flex-cell-blue" id="0"></div>
+                <div class="flex-cells flex-cell-blue" id="1"></div>
+                <div class="flex-cells flex-cell-blue" id="2"></div>
+                
+              </div>
+              <div class="flex-rows">
+                <div class="flex-cells flex-cell-blue" id="3"></div>
+                <div class="flex-cells flex-cell-blue" id="4"></div>
+                <div class="flex-cells flex-cell-blue" id="5"></div>
+
+              </div>
+              <div class="flex-rows">
+                <div class="flex-cells flex-cell-blue" id="6"></div>
+                <div class="flex-cells flex-cell-blue" id="7"></div>
+                <div class="flex-cells flex-cell-blue" id="8"></div>
+              </div>
+            </div>
+
+            <div class="logo mine-result"></div>
+
+            <div class="game-page-btn-container">
+              <button class="btn btn-fill js-auto-play">Auto Play</button>
+              <button class="btn btn-fill js-submit emote-disabled">Submit</button>
+              <button class="btn btn-unfill withdraw-btn">Withdraw</button>
+            </div>
+
+            <div class="game-level-container game-page-btn-container gtn-level-container">
+              <button class="btn btn-fill" onclick="mode = 'Easy'; handleMode(mode)">Easy</button>
+              <button class="btn btn-fill" onclick="mode = 'Medium'; handleMode(mode)">Medium</button>
+              <button class="btn btn-fill" onclick="mode = 'Hard'; handleMode(mode);">Hard</button>
+            </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../scripts/mine-the-gld.js"></script>
+
+</body>
+</html>

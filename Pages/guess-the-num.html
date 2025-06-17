@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess The Number | Casinozz</title>
+
+  <link rel="stylesheet" href="../CSS-FILES/casino-style.css">
+  <link rel="stylesheet" href="../CSS-FILES/game-pages.css">
+</head>
+
+<body onkeydown="let status = event.key;
+  if(status === 'Tab') console.log(status);
+">
+<script>
+  let mode = 'Medium';
+</script>
+
+  <div class="whole-flex">
+    <nav class="nav-bar">
+      <a href="index.html" class="logo">Casinozz</a>
+      <ul class="nav-list">
+        <li><a href="index.html" target="_blank" class="nav-link">Home</a></li>
+        <li><a href="" class="nav-link">Settings</a></li>
+        <li><a href="login-signup.html" class="nav-link">Login</a></li>
+        <li><a href="" class="nav-link">Help</a></li>
+      </ul>
+    </nav>
+
+    <main class="glass main-section gtn-main-section" onkeydown="handleTabPress(event.key);">
+      <section class="game-header-gtn">
+        <div class="game-header">
+          <h1>
+            <a href="guess-the-num.html" class="logo">
+              Guess The Number
+            </a>
+          </h1>
+
+          <div class="score-board">
+            <div class="score-icon"></div>
+            <div class="score">0</div>
+          </div>
+        </div> 
+      </section>
+
+      <div class="playground-gtn">
+          <div class="choice-sections">
+            <div class="choice-output-icon choices-gtn logo" id="opt1"></div>
+            <div class="choice-output-icon choices-gtn logo" id="opt2"></div>
+            <div class="choice-output-icon choices-gtn logo" id="opt3"></div>
+          </div>
+
+          <div class="user-choice-area">
+            <div class="guidance-gtn">To Generate the Options click 'Tab' or 'Generate' button below</div>
+            <div class="input-area">
+                
+                <button class="btn btn-fill js-generate" onclick="fillOptions(mode);">Generate</button>
+                <input type="number" placeholder="Number Here" id="userChoice" max="100" min="0" class="input-field"
+                onkeydown="
+                  let keyName = event.key;
+                  handleTabPress(keyName, mode);
+                  handleInpField();
+                  if(keyName === 'Enter'){
+                    computeResult(mode);
+                  }
+                ">
+                <button class="btn btn-fill play-btn" onclick="computeResult(mode);">Play</button>
+                
+            </div>
+            <div class="slider">
+              <span class="slider-values">0</span>
+              <input type="range" id="choiceSelector" max="100" min="0" oninput="handleSlider();">
+              <span class="slider-values">100</span>
+            </div>
+          </div>
+          
+
+          <div class="game-result logo emote-disabled">
+            Victory
+          </div>
+
+          <div class="game-page-btn-container game-level-container">
+            <button class="btn btn-fill js-auto-play" onclick="handleAutoPlay(mode);">Auto Play</button>
+            <button class="btn btn-unfill play-count">Play Count : 0</button>
+            <button class="btn btn-fill reset-btn" 
+              onclick="handleReset(document.querySelector('.reset-btn').innerText);
+            ">
+              Reset
+            </button>
+          </div>
+      </div>
+      
+
+      <div class="game-level-container game-page-btn-container gtn-level-container">
+        <button class="btn btn-fill" onclick="mode = 'Easy'; handleMode(mode)">Easy</button>
+        <button class="btn btn-fill" onclick="mode = 'Medium'; handleMode(mode)">Medium</button>
+        <button class="btn btn-fill" onclick="mode = 'Hard'; handleMode(mode);">Hard</button>
+      </div>
+      
+    </main>
+  </div>
+
+  <script src="../scripts/guess-the-num.js"></script>
+</body>
+</html>

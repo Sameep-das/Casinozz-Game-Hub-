@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flip The Coin | Casinozz</title>
+
+  <link rel="stylesheet" href="../CSS-FILES/casino-style.css">
+  <link rel="stylesheet" href="../CSS-FILES/game-pages.css">
+</head>
+<body>
+  <div class="whole-flex">
+    <nav class="nav-bar">
+      <a href="index.html" class="logo">Casinozz</a>
+      <ul class="nav-list">
+        <li><a href="index.html" target="_blank" class="nav-link">Home</a></li>
+        <li><a href="" class="nav-link">Settings</a></li>
+        <li><a href="login-signup.html" class="nav-link">Login</a></li>
+        <li><a href="" class="nav-link">Help</a></li>
+      </ul>
+    </nav>
+
+    <main class="glass main-section ftp-main-section">
+      <section class="game-page-section ftp-game-page-section">
+        <div class="victory-popup score-popup glass">+1</div>
+        <div class="defeat-popup score-popup glass">-1</div>
+        <div class="game-header ftp-game-header">
+          <h1>
+            <a href="flip-the-coin.html" class="logo">
+              Flip The Coin
+            </a>
+          </h1>
+
+          <div class="score-board">
+            <div class="score-icon gold-coin-icon"></div>
+            <div class="score">0</div>
+          </div>
+        </div>
+
+        <div class="pg-ftp">
+
+            <div class="choice-wrapper comp-choice-wrapper">
+              <div class="choice-output-icon js-output-icon"></div>
+              <div class="logo toss-result emote-disabled">Victory</div>
+            </div>
+
+            <div class="choice-outputs ftp-choice-outputs">
+              <div class="choice-wrapper comp-choice-wrapper">
+                <div class="choice-output-icon head-icon ftp-choice-icon ftp-head js-head-input"></div>
+                <div class="choice-name-ftp ftp-head">Heads</div>
+              </div>
+              <div class="choice-wrapper user-choice-wrapper">
+                <div class="choice-output-icon tail-icon ftp-choice-icon ftp-tail js-tail-input"></div>
+                <div class="choice-name-ftp ftp-tail">Tails</div>
+              </div>
+            </div>
+
+            <div class="game-page-btn-container">
+              <button class="btn btn-fill js-auto-play">Auto Play</button>
+              <button class="btn btn-unfill reset-btn">Reset</button>
+            </div>
+        </div>
+
+
+      </section>
+    </main>
+  </div>
+
+  <script src="../scripts/flip-the-coin.js"></script>
+
+</body>
+</html>
