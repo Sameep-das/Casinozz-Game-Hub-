@@ -21,7 +21,7 @@
   /*FONTS*/
   --logo-font : "Badeen Display", system-ui;
   --logo-font-wt : 400;
-
+  font-size : 16px;
   --para-fonts : "Inter", sans-serif;
   /*COLORS*/
   --headings-red : #F01B1B;
