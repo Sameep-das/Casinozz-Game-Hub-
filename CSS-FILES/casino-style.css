@@ -15,15 +15,11 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Badeen+Display&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-html{
-  font-size : 16px;
-}
-
 :root{
   /*FONTS*/
+    font-size : 12px;
   --logo-font : "Badeen Display", system-ui;
   --logo-font-wt : 400;
-  font-size : 16px;
   --para-fonts : "Inter", sans-serif;
   /*COLORS*/
   --headings-red : #F01B1B;
