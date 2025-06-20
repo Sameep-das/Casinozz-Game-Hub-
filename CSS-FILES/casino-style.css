@@ -60,6 +60,24 @@ body{
   color: var(--secondary-white);
 }
 
+/*Utilities*/
+.flex-col{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+
+.flex-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+
+/*input field styling for placeholder and up-down arrow key*/
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -69,10 +87,6 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number]::placeholder{
   color: #111;
   font-size: 18px;
-}
-
-input[type=number] {
-  -moz-appearance: textfield;
 }
 
 .input-field{
@@ -86,147 +100,7 @@ input[type=number] {
   text-align: center;
 }
 
-.whole-flex{
-  width: 100%;
-  height: auto;
-  background-image: url("../resources/bg-body.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode:darken;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5rem;
-}
-
-.flex-col{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.glass{
-  background: var(--bg-glass);
-  /* box-shadow: var(--glass-shadow); */
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border-radius: var(--glass-border-radius);
-  border: var(--glass-border);
-}
-
-header{
-  width: 100%;
-  height: 90vh;
-}
-
-.nav-bar{
-  width: 90%;
-  height: 10%;
-  margin: 0 auto;
-  margin-top: 0.8rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: baseline;
-}
-
-.logo{
-  color: var(--headings-red);
-  font-size: 3rem;
-  font-family: var(--logo-font);
-  font-weight: var(--logo-font-wt);
-  -webkit-text-stroke: 1.5px var(--primary-black);
-}
-
-.nav-list{
-  width: 45%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/*HERO SECTION*/
-
-.hero-container{
-  width: 90%;
-  height: 90%;
-  margin: 0 auto;
-  position: relative;
-  border: none;
-  border-radius: 10px;
-}
-
-.hero-icon{
-  position: absolute;
-  z-index: 1;
-  filter: drop-shadow(7px 7px 2px rgba(0,0,0,0.5));
-}
-
-.icon-top-right{
-  width: 250px;
-  height: 250px;
-  top: -1rem;
-  right: -50px;
-  background: url(../resources/dice-graphic.png);
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.icon-bottom-left{
-  height: 450px;
-  width: 300px;
-  bottom: 0.1rem;
-  left: -1rem;
-  background: url(../resources/cards-in-hand.png);
-  background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.hero-div{
-  width: 95%;
-  height: 100%;
-  margin: 0 auto;
-  color: var(--secondary-white);
-  text-align: center;
-  border-radius: 10px;
-  position: relative;
-  font-size: 1.5rem;
-}
-
-.logo-wrapper{
-  width: 100%;
-  position: absolute;
-  top: 30%;
-  left: 0;
-  right: 0;
-  margin-bottom: 0.5rem;
-  color: var(--primary-white);
-}
-
-.hero-info{
-  position: absolute;
-  top: 53%;
-  left: 10%;
-  right: 10%;
-}
-
-.btn-container{
-  width: 100%;
-  height: 20%;
-  position: absolute;
-  top: 75%;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-  gap: 2rem;
-}
+/*Buttons*/
 
 .btn{
   font-size: 1.3rem;
@@ -241,13 +115,13 @@ header{
   background-color: var(--secondary-orange);
 }
 
-.btn-fill:hover{
+.btn-unfill{
   border: 1px solid var(--primary-white);
   background-color: transparent;
   color: var(--primary-white);
 }
 
-.btn-unfill{
+.btn-fill:hover{
   border: 1px solid var(--primary-white);
   background-color: transparent;
   color: var(--primary-white);
@@ -259,17 +133,145 @@ header{
   color: var(--primary-black);
 }
 
-.btn{
-  font-size: 1.3rem;
-  padding: 0.4em 1em;
-  border-radius: 0.5em;
-  cursor: pointer;
-  font-family: var(--para-fonts);
+
+/*Utilities end here*/
+
+
+/*The container of all elements -> only direct child to body*/
+.whole-flex{
+  width: 100%;
+  height: auto;
+  background-image: url("../resources/bg-body.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode:darken;
+  gap: 5rem;
+}
+
+/*Glassomorphic card*/
+.glass{
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--glass-border-radius);
+  border: var(--glass-border);
+}
+
+/*First child of whole-flex*/
+.header{
+  width: 100%;
+  height: 100vh;
+  padding: 2rem 0 0;
+}
+
+/*First child to Header*/
+.nav-bar{
+  width: 90%;
+  height: 10%;
+  margin: 0 auto 3rem;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+/*First child to nav-bar*/
+.logo{
+  color: var(--headings-red);
+  font-size: 3rem;
+  font-family: var(--logo-font);
+  font-weight: var(--logo-font-wt);
+  -webkit-text-stroke: 1.5px var(--primary-black);
+}
+
+/*Second Child to Nav-Bar*/
+.nav-list{
+  justify-content: right;
+  gap: 5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+/*HERO SECTION - Second Child to Header*/
+
+.hero-container{
+  width: 90%;
+  height: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+/*Mini icons over the hero container - direct children to the hero container*/
+.hero-icon{
+  position: absolute;
+  z-index: 1;
+  filter: drop-shadow(7px 7px 2px rgba(0,0,0,0.5));
+}
+
+/*top-right dice*/
+.icon-top-right{
+  width: 250px;
+  max-width: 250px;
+  min-width: 150px;
+  height: 250px;
+  top: -1rem;
+  right: -50px;
+  background: url(../resources/dice-graphic.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/*bottom left cards*/
+.icon-bottom-left{
+  width: 300px;
+  height: 450px;
+  min-width: 250px;
+  max-width: 400px;
+  bottom: 0.1rem;
+  left: -1rem;
+  background: url(../resources/cards-in-hand.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/*contains hero content*/
+.hero-div{
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 3rem 0;
+  color: var(--secondary-white);
+  text-align: center;
+  border-radius: 10px;
+  position: relative;
+  font-size: 1.5rem;
+  gap: 4rem;
+}
+
+/*Contains logo and Subtitle - Direct Child to hero-div*/
+.logo-wrapper{
+  width: 100%;
+  color: var(--primary-white);
+}
+
+.hero-info{
+  width: 60%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.btn-container{
+  width: 100%;
+  align-items: baseline;
+  gap: 2rem;
 }
 
 .hero-logo{
   font-size: 5rem;
   -webkit-text-stroke-width: 3px;
+  letter-spacing: 2px;
 }
 
 /*GAME CARDS*/
@@ -277,25 +279,34 @@ header{
 .game-card-container{
   width: 90%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  padding: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
 }
 
 
 .game-card{
-  width: 23%;
   height: auto;
+  max-height: 400px;
   text-align: center;
-  padding: 1rem 0.5rem;
+  padding: 1.5rem 0.5rem;
+  justify-content: center;
+  gap: 20px;
+}
+
+/*contains logo img*/
+.game-logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game-logo{
-  margin-top: 2rem;
   width: 100px;
   border-radius: calc(50px/2);
 }
+
 
 .game-name a{
  font-size: 1.8rem;
@@ -304,31 +315,29 @@ header{
  text-shadow: none;
 }
 
-.game-btn{
-  margin: 1rem 0;
-  padding: 0.1rem 1rem;
-  font-size: 1rem;
+.game-name a:hover{
+  color: var(--primary-white);
 }
+
+.game-btn{
+  font-size: 1rem;
+  padding: 0.5em 2em;
+}
+
 
 /*CALL TO ACTION - JOIN THE COMMUNITY*/
 
 .call-to-action{
   width: 90%;
   margin: 0 auto;
-}
-
-.cta-info-container{
-  width: 100%;
   padding: 2rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   gap: 2rem;
 }
 
 .cta-info{
   text-align: center;
-  width: 80%;
+  width: 60%;
+  line-height: 1.4;
   font-size: 1.2rem;
 }
 
@@ -384,11 +393,13 @@ input:focus{
 
 /*FOOTER*/
 
-footer{
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: baseline;
+.grid-footer{
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  gap: 3rem;
 }
 
 .footer-flex-name{
@@ -397,13 +408,13 @@ footer{
 
 .footer-flex-links{
   margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
+  align-items: flex-start;
 }
 
-.footer-flex-links a{
+.social-link-cntnr{
   color: var(--secondary-white);
+  gap: 10px;
 }
 
 .link-icon{
@@ -417,7 +428,7 @@ footer{
 }
 
 .social-icon{
-  width: 50px;
+  width: 15px;
   height: 1rem;
   display: inline-block;
 }

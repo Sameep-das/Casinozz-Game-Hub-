@@ -9,11 +9,11 @@
 </head>
 
 <body>
-  <div class="whole-flex">
-  <header>
-    <nav class="nav-bar">
+  <div class="whole-flex flex-col">
+  <header class="header">
+    <nav class="nav-bar flex-row">
       <a href="#" class="logo">Casinozz</a>
-      <ul class="nav-list">
+      <ul class="nav-list flex-row">
         <li><a href="#" class="nav-link">Home</a></li>
         <li><a href="" class="nav-link">Settings</a></li>
         <li><a href="./Pages/login-signup.html" class="nav-link">Login</a></li>
@@ -23,7 +23,7 @@
 
     <div class="hero-container">
       <div class="hero-icon icon-top-right"></div>
-      <div class="hero-div glass">
+      <div class="hero-div glass flex-col">
         <div class="logo-wrapper">
           <h1 class="logo hero-logo">Casinozz</h1>
           <div class="slogan">Play. Win. Run.</div>
@@ -31,7 +31,7 @@
         <p class="hero-info">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum reprehenderit consectetur distinctio doloribus. At, beatae tempore enim a impedit delectus. Blanditiis, expedita deserunt? Aliquam quidem cumque laborum, ea iusto dicta excepturi architecto accusamus voluptatem est!
         </p>
-        <div class="btn-container">
+        <div class="btn-container flex-row">
           <button class="btn hero-btn btn-fill">
             <a href="#games">Play Now</a>
           </button>
@@ -45,54 +45,61 @@
   </header>
 
   <section class="game-card-container" id="games">
-    <div class="game-card glass">
-      <img src="./resources/rck-ppr-scssr.png" alt="" class="game-logo game1">
-      <h1 class="logo game-name">
-        <a href="./Pages/rock-paper-scissos.html" target="_blank">
+    <div class="game-card glass flex-col">
+      <div class="game-logo-container">
+        <img src="./resources/rck-ppr-scssr.png" alt="" class="game-logo game1">
+      </div>
+      <h1 class="logo game-name flex-row">
+        <a href="./Pages/rock-paper-scissos.html">
           Rock-Paper-Scissors
         </a>
       </h1>
       <button class="btn-fill btn game-btn">
-        <a href="./Pages/rock-paper-scissos.html" target="_blank">Play Now</a>
+        <a href="./Pages/rock-paper-scissos.html">Play Now</a>
       </button>
     </div>
-    <div class="game-card glass">
-      <img src="./resources/mine-the-gld.png" alt="" class="game-logo game2">
-      <h1 class="logo game-name">
-        <a href="./Pages/mine-the-gold.html" target="_blank">
+    <div class="game-card glass flex-col">
+      <div class="game-logo-container">
+        <img src="./resources/mine-the-gld.png" alt="" class="game-logo game2">
+      </div>
+      <h1 class="logo game-name flex-row">
+        <a href="./Pages/mine-the-gold.html">
           Mine the Gold
         </a>
       </h1>
       <button class="btn-fill btn game-btn">
-        <a href="./Pages/mine-the-gold.html" target="_blank">Play Now</a>
+        <a href="./Pages/mine-the-gold.html">Play Now</a>
       </button>
     </div>
-    <div class="game-card glass">
-      <img src="./resources/flip-coin.png" alt="" class="game-logo game3">
-      <h1 class="logo game-name">
-        <a href="./Pages/flip-the-coin.html" target="_blank">
+    <div class="game-card glass flex-col">
+      <div class="game-logo-container">
+        <img src="./resources/flip-coin.png" alt="" class="game-logo game3">
+      </div>
+      <h1 class="logo game-name flex-row">
+        <a href="./Pages/flip-the-coin.html">
           Flip the Coin
         </a>
       </h1>
       <button class="btn-fill btn game-btn">
-        <a href="./Pages/flip-the-coin.html" target="_blank">Play Now</a>
+        <a href="./Pages/flip-the-coin.html">Play Now</a>
       </button>
     </div>
-    <div class="game-card glass">
-      <img src="./resources/guess-the-num.png" alt="" class="game-logo game4">
-      <h1 class="logo game-name">
-        <a href="./Pages/guess-the-num.html" target="_blank">
+    <div class="game-card glass flex-col">
+      <div class="game-logo-container">
+        <img src="./resources/guess-the-num.png" alt="" class="game-logo game4">
+      </div>
+      <h1 class="logo game-name flex-row">
+        <a href="./Pages/guess-the-num.html">
           Guess the Number
         </a>
       </h1>
       <button class="btn-fill btn game-btn">
-        <a href="./Pages/guess-the-num.html" target="_blank">Play Now</a>
+        <a href="./Pages/guess-the-num.html">Play Now</a>
       </button>
     </div>
   </section>
 
-  <section class="call-to-action">
-    <div class="cta-info-container glass">
+  <section class="call-to-action flex-col glass">
       <h1 class="cta-head logo">
       Join The Community
       </h1>
@@ -104,10 +111,9 @@
         <input type="search" name="search" id="search-bar" class="search-area input-field glass" placeholder="Search Clans">
         <div class="glass search-icon"></div>
       </div>
-    </div>
   </section>
 
-  <footer>
+  <footer class="grid-footer">
     <div class="footer-flex-items">
       <h3 class="footer-flex-name logo">About Us</h3>
       <div style="margin-top: 1rem;">
@@ -120,7 +126,7 @@
     </div>
     <div class="footer-flex-items">
       <h3 class="footer-flex-name logo">Know More</h3>
-      <div class="footer-flex-links">
+      <div class="footer-flex-links flex-col">
         <a href="">Community<div class="link-icon"></div></a>
         <a href="">FAQ<div class="link-icon"></div></a>
         <a href="">Licenses<div class="link-icon"></div></a>
@@ -129,7 +135,7 @@
     </div>
     <div class="footer-flex-items">
       <h3 class="footer-flex-name logo">Games</h3>
-      <div class="footer-flex-links">
+      <div class="footer-flex-links flex-col">
         <a href="./Pages/rock-paper-scissos.html" target="_blank">Rock-Paper-Scissors<div class="link-icon"></div></a>
         <a href="./Pages/mine-the-gold.html" target="_blank">Mine The Gold<div class="link-icon"></div></a>
         <a href="./Pages/flip-the-coin.html" target="_blank">Flip The Coin<div class="link-icon"></div></a>
@@ -138,11 +144,11 @@
     </div>
     <div class="footer-flex-items">
       <h3 class="footer-flex-name logo">Follow Us</h3>
-      <div class="footer-flex-links">
-        <a href="https://www.instagram.com/ayyush_21/" target="_blank"><div class="social-icon insta"></div>ayyush_21</a>
-        <a href="https://github.com/Sameep-das" target="_blank"><div class="social-icon git"></div>das_sameep</a>
-        <a href="https://www.linkedin.com/in/dassameep/" target="_blank"><div class="social-icon linkedin"></div>das_sameep</a>
-        <a href="https://www.youtube.com/@shadowwiz6466" target="_blank"><div class="social-icon yt"></div>shadow_wiz</a>
+      <div class="footer-flex-links flex-col">
+        <a href="https://www.instagram.com/ayyush_21/" target="_blank" class="flex-row social-link-cntnr"><div class="social-icon insta"></div>ayyush_21</a>
+        <a href="https://github.com/Sameep-das" target="_blank" class="flex-row social-link-cntnr"><div class="social-icon git"></div>das_sameep</a>
+        <a href="https://www.linkedin.com/in/dassameep/" target="_blank" class="flex-row social-link-cntnr"><div class="social-icon linkedin"></div>das_sameep</a>
+        <a href="https://www.youtube.com/@shadowwiz6466" target="_blank" class="flex-row social-link-cntnr"><div class="social-icon yt"></div>shadow_wiz</a>
       </div>
     </div>
   </footer>
