@@ -9,10 +9,10 @@
   <link rel="stylesheet" href="../CSS-FILES/game-pages.css">
 </head>
 <body>
-  <div class="whole-flex">
-    <nav class="nav-bar">
+  <div class="whole-flex flex-col whole-flex-game-pages">
+    <nav class="nav-bar flex-row game-page-nav-bar">
       <a href="../index.html" class="logo">Casinozz</a>
-      <ul class="nav-list">
+      <ul class="nav-list flex-row">
         <li><a href="../index.html" target="_blank" class="nav-link">Home</a></li>
         <li><a href="" class="nav-link">Settings</a></li>
         <li><a href="login-signup.html" class="nav-link">Login</a></li>
@@ -20,83 +20,51 @@
       </ul>
     </nav>
 
-    <main class="glass main-section">
-      <section class="game-page-section">
+    <main class="glass game-page-main-section flex-col">
+      <section class="game-page-section flex-col">
         <h1>
           <a href="#" class="logo">
           Rock-Paper-Scissors
           </a>
         </h1>
 
-        <div class="score-board">
+        <div class="score-board flex-row">
           <div class="score-icon"></div>
-          <div class="score">0</div>
+          <div class="score"></div>
         </div>
 
-        <div class="playground-rps">
-          <div class="user-choice-opts">
-            <div class="choice-icon rock-icon"
-            onclick="
-              userChoice = 'rock';
-              computeScore(computeResult(userChoice,compChoice()));
-              
-              onTouch.play();
-            "></div>
-            <div class="choice-icon paper-icon"
-            onclick="
-              userChoice = 'paper';
-              computeScore(computeResult(userChoice,compChoice()));
-              onTouch.play();
-            "></div>
-            <div class="choice-icon scissor-icon"
-            onclick="
-              userChoice = 'scissors';
-              computeScore(computeResult(userChoice,compChoice()));
-              onTouch.play();
-            "></div>
+        <div class="playground-rps flex-row">
+          <div class="user-choice-opts flex-col">
+            <div id="rock" class="choice-icon js-choice-icon rock-icon"></div>
+            <div id="paper" class="choice-icon paper-icon js-choice-icon"></div>
+            <div id="scissors" class="choice-icon scissor-icon js-choice-icon"></div>
           </div>
 
-          <div class="game-output">
+          <div class="game-output flex-col">
             <div class="choice-outputs">
-              <div class="choice-wrapper comp-choice-wrapper">
+              <div class="choice-wrapper flex-col comp-choice-wrapper">
                 <div class="choice-output-icon js-compChoice"></div>
                 <div class="choice-name">Computer</div>
               </div>
-              <div class="choice-wrapper user-choice-wrapper">
+              <div class="choice-wrapper flex-col user-choice-wrapper">
                 <div class="choice-output-icon js-userChoice"></div>
                 <div class="choice-name">Avenger</div>
               </div>
             </div>
 
-            <div class="game-result logo js-result">
+            <div class="logo js-result">
               Victory
             </div>
             <div class="js-score">Wins: 0 | Losses: 0 | Ties: 0 </div>
             
 
-            <div class="game-page-btn-container">
-              <button class="btn btn-fill js-auto-play"
-              onclick="
-              handleAutoPlay();
-              "
-              >Auto Play</button>
-              <button class="btn btn-unfill reset-btn"
-              onclick="status = 'Reset Score';
-                handleReset(status);
-                onReset.play();
-              "
-              >Reset</button>
+            <div class="game-page-btn-container flex-row">
+              <button class="btn btn-fill js-auto-play">Auto Play</button>
+              <button class="btn btn-unfill reset-btn">Reset</button>
             </div>
           </div>
         </div>
       </section>
-
-        <div class="game-level-container game-page-btn-container">
-          <button class="btn btn-fill">Easy</button>
-          <button class="btn btn-fill">Medium</button>
-          <button class="btn btn-fill">Hard</button>
-        </div>
-      
     </main>
   </div>
 

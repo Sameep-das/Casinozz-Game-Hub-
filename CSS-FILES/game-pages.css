@@ -25,45 +25,53 @@
   --glass-border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
-.main-section{
-  height: 88vh;
+/*To Hide Things*/
+.emote-disabled{
+  opacity: 0;
+}
+
+/*adjust bottom padding*/
+.whole-flex-game-pages{
+  padding-bottom: 3rem;
+}
+
+/*to adjust navigation bar*/
+.game-page-nav-bar{
+  padding-top: 2rem;
+  margin-bottom: 0;
+}
+
+.game-page-main-section{
   width: 90%;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   gap: .5rem;
-  margin-bottom: 4rem;
   padding: 1.5rem 0;
 }
 
 .game-page-section{
   height: 100%;
   width: 100%;
-  /* margin-top: 1rem; */
+  gap: 3rem;
   position: relative;
   text-align: center;
 }
 
+/*Score Board Placed at top right - Direct Child of game-page-section*/
 
 .score-board{
-  width: 150px;
-  height: 60px;
+  width: 130px;
   border-radius: 30px;
   background-color: aliceblue;
   padding: 2px 10px;
   position: absolute;
   right: 1rem;
   top: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .score-icon{
-  width: 50%;
-  height: 50px;
+  width: 40%;
+  height: 40px;
   background: url(../resources/score-board.png);
   background-position: center;
   background-size: 60% 70%;
@@ -79,39 +87,27 @@
 }
 
 .score{
+  width: 60%;
   color: black;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: bold;
-  width: 50%;
   text-align: center;
 }
 
-.playground-rps{
-  width: 70%;
-  height: calc(80vh - 1rem - 60px - 3rem - 3rem);
-  margin: 0 auto;
-  position: absolute;
-  top: calc(1rem + 60px + 3rem);
-  left: 5%;
-  right: 5%;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-}
+/*Score Board Done*/
 
 .user-choice-opts{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, 1fr);
   width: 30%;
+  gap: 20px;
+  justify-items: center;
 }
 
 .choice-icon{
-  width: 180px;
-  height: 30%;
+  width: 120px;
+  height: 120px;
   border: 5px solid aliceblue;
   border-radius: 50%;
 }
@@ -121,7 +117,91 @@
   opacity: 0.7;
 }
 
+/*Wraps Choice wrapper game-result js-score and the button contianer*/
+.game-output{
+  justify-content: space-evenly;
+  gap: 1rem;
+  width: 70%;
+  text-align: center;
+}
 
+/*Holds each individual choice wrapper*/
+.choice-outputs{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  column-gap: 2rem;
+  justify-items: center;
+}
+
+/*Wraps Icon and Name Of The Player*/
+.choice-wrapper{
+  width: 50%;
+  text-align: center;
+  gap: 1rem;
+}
+
+.choice-output-icon{
+  width: 150px;
+  height: 150px;
+  border-radius: 1000px;
+  text-align: center;
+  border: 5px solid aliceblue;
+}
+
+.choice-name{
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+/*Choice wrapper done*/
+
+.js-score{
+  font-size: 1.2rem;
+}
+
+/*Victory- green*/
+.green-result{
+  color: #adff2f;
+}
+
+/*game-tie is White*/
+.white-result{
+  color: var(--primary-white);
+}
+
+.game-page-btn-container{
+  gap: 2rem;
+}
+
+.game-level-container{
+  margin-top: 0rem;
+}
+
+/*Rock Paper Scissors*/
+
+/*The DropDown of Multiplayerand Computer*/
+#game-modes{
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+}
+
+#game-mode option:focus{
+  outline: none;
+  border: none;
+}
+/*DropDown Ends Here*/
+
+/*Main Playground Area - 3rd child of the game-page-section*/
+.playground-rps{
+  width: 70%;
+  height: calc(80vh - 1rem - 60px - 3rem - 3rem);
+  margin: 0 auto;
+  border-radius: 10px;
+  align-items: stretch;
+}
 
 .rock-icon{
   background: url(../resources/rock.png) no-repeat;
@@ -135,17 +215,6 @@
   background-position: center;
 }
 
-.head-icon{
-  background: url(../resources/coin-head.webp) no-repeat;
-  background-size: 80% 80%;
-  background-position: center;
-}
-
-.tail-icon{
-  background: url(../resources/coin-tail.webp) no-repeat;
-  background-size: 80% 80%;
-  background-position: center;
-}
 
 .scissor-icon{
   background: url(../resources/scissors.svg) no-repeat;
@@ -153,83 +222,7 @@
   background-position: center;
 }
 
-.game-output{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  width: 70%;
-  text-align: center;
-}
-
-.choice-outputs{
-  width: 100%;
-  height: 60%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.choice-wrapper{
-  width: 50%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1rem;
-  align-items: center;
-}
-
-.choice-output-icon{
-  width: 200px;
-  height: 200px;
-  border-radius: 1000px;
-  text-align: center;
-  border: 5px solid aliceblue;
-}
-
-.choice-name{
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-}
-
-.game-result{
-  height: 10%;
-  font-size: 3rem;
-  line-height: 1rem;
-}
-
-.js-score{
-  font-size: 1.2rem;
-}
-
-
-.emote-disabled{
-  opacity: 0;
-}
-
-
-.game-page-btn-container{
-  height: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 2rem;
-  /*margin-top: 1rem; */
-}
-
-.game-level-container{
-  height: auto;
-  margin-top: 0rem;
-  /* margin-bottom: 1rem; */
-}
-
 /*GUESS THE NUMBER*/
-
-
 
 .gtn-main-section{
   height: 80vh;
@@ -350,6 +343,18 @@
 }
 
 /*FLIP THE COIN*/
+
+.tail-icon{
+  background: url(../resources/coin-tail.webp) no-repeat;
+  background-size: 80% 80%;
+  background-position: center;
+}
+
+.head-icon{
+  background: url(../resources/coin-head.webp) no-repeat;
+  background-size: 80% 80%;
+  background-position: center;
+}
 
 .ftp-main-section{
   height: 80vh;
