@@ -35,6 +35,9 @@ document.body
       computeScore(computeResult('scissors'));
       onTouch.play();
     }
+    else if(event.key === ' '){
+      handleAutoPlay();
+    }
   });
 
 document.querySelector('.reset-btn')
@@ -60,6 +63,9 @@ function handleReset()
   document.querySelector('.js-compChoice').classList.add('emote-disabled');
   document.querySelector('.js-result').classList.add('emote-disabled');
   document.querySelector('.score').innerHTML = score.wins;
+  document.querySelector('.js-auto-play').innerText = 'Auto Play';
+  clearInterval(autoPlayID);
+  isAutoPlay = false;
 }
 
 let compChoice;
