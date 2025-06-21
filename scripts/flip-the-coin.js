@@ -1,10 +1,18 @@
 const onTouch = new Audio('../resources/onTouch.mp3');
+const onReset = new Audio('../resources/welcome.mp3')
+let tossResult = document.querySelector('.toss-result');
+let outputIcon = document.querySelector('.js-output-icon');
+let headInput = document.querySelector('.js-head-input');
+let tailInput = document.querySelector('.js-tail-input');
+
 let score = JSON.parse(localStorage.getItem('ftpScore'));
 if (!score) {
   score = {
     wins: 0
   };
 }
+
+document.querySelector('.score').innerText = score.wins;
 
 function compChoice() {
   let randomNo = Math.random();
@@ -23,16 +31,17 @@ function defineToss(value) {
 function evaluateResult(userChoice) {
   let computerMove = defineToss(compChoice());
   if(computerMove === 'Head'){
-    document.querySelector('.js-output-icon').classList.remove('tail-icon');
-    document.querySelector('.js-output-icon').classList.add('head-icon');
-  } else if(computerMove === 'Tail') {
-    document.querySelector('.js-output-icon').classList.add('tail-icon');
+    outputIcon.classList.remove('tail-icon');
+    outputIcon.classList.add('head-icon');
+  } else{
+    outputIcon.classList.remove('head-icon');
+    outputIcon.classList.add('tail-icon');
   }
-  document.querySelector('.toss-result').classList.remove('emote-disabled');
+  tossResult.classList.remove('emote-disabled');
   if (computerMove === userChoice) {
-    document.querySelector('.toss-result').innerText = "Victory";
+    tossResult.classList.add('green-result');
+    tossResult.innerText = "Victory";
     setTimeout(() => {
-      // alert("Hello");
       document.querySelector('.victory-popup').classList.remove('show-popup');
       }, 700);
     document.querySelector('.victory-popup').classList.add('show-popup');
@@ -41,10 +50,10 @@ function evaluateResult(userChoice) {
     score.wins += 1;
   }
   else {
-    document.querySelector('.toss-result').innerText = "Defeat";
+    tossResult.classList.remove('green-result');
+    tossResult.innerText = "Defeat";
     setTimeout(() => {
       document.querySelector('.defeat-popup').classList.remove('show-popup');
-      console.log("hi")
       }, 700);
     document.querySelector('.defeat-popup').classList.add('show-popup');
     if (score.wins > 0) {
@@ -55,25 +64,30 @@ function evaluateResult(userChoice) {
   document.querySelector('.score').innerText = score.wins;
 }
 
-document.querySelector('.ftp-tail')
+tailInput
   .addEventListener('click',
     () => {
       evaluateResult("Tail");
       onTouch.play();
     });
 
-document.querySelector('.ftp-head')
+headInput
   .addEventListener('click',
     () => {
       evaluateResult("Head");
       onTouch.play();
     });
 
+function removeFeatures(){
+  headInput.style.removeProperty('opacity', '0.7');
+  tailInput.style.removeProperty('opacity', '0.7');
+  headInput.classList.remove('choice-select');
+  tailInput.classList.remove('choice-select');
+}
+
 function handleReset() {
-  document.querySelector('.js-head-input').style.removeProperty('opacity', '0.7');
-  document.querySelector('.js-tail-input').style.removeProperty('opacity', '0.7');
-  document.querySelector('.js-head-input').classList.remove('choice-select');
-  document.querySelector('.js-tail-input').classList.remove('choice-select');
+  onReset.play();
+  removeFeatures();
   localStorage.removeItem('ftpScore');
   score = JSON.parse(localStorage.getItem('ftpScore'));
   if (score === null) {
@@ -81,9 +95,9 @@ function handleReset() {
       wins: 0
     };
   }
-  document.querySelector('.toss-result').classList.add('emote-disabled');
-  document.querySelector('.js-output-icon').classList.remove('head-icon');
-  document.querySelector('.js-output-icon').classList.remove('tail-icon');
+  tossResult.classList.add('emote-disabled');
+  outputIcon.classList.remove('head-icon');
+  outputIcon.classList.remove('tail-icon');
   document.querySelector('.score').innerText = score.wins;
 }
 
@@ -93,6 +107,13 @@ document.querySelector('.reset-btn')
       handleReset();
     });
 
+document.querySelector('.js-auto-play')
+  .addEventListener('click',
+    () => {
+      handleAutoPlay();
+    });
+
+
 let isAutoPlay = false;
 let intervalID;
 function handleAutoPlay(){
@@ -101,17 +122,17 @@ function handleAutoPlay(){
     intervalID = setInterval(() => {
       let compAsUserMove = defineToss(compChoice());
       if(compAsUserMove === 'Head'){
-        document.querySelector('.js-tail-input').style.setProperty('opacity', '0.7');
-        document.querySelector('.js-head-input').style.removeProperty('opacity', '0.7');
-        document.querySelector('.js-tail-input').classList.remove('choice-select');
-        document.querySelector('.js-head-input').classList.add('choice-select');
+        tailInput.style.setProperty('opacity', '0.7');
+        headInput.style.removeProperty('opacity', '0.7');
+        tailInput.classList.remove('choice-select');
+        headInput.classList.add('choice-select');
         onTouch.play();
       }
       else if(compAsUserMove === 'Tail'){
-        document.querySelector('.js-head-input').style.setProperty('opacity', '0.7');
-        document.querySelector('.js-tail-input').style.removeProperty('opacity', '0.7');
-        document.querySelector('.js-head-input').classList.remove('choice-select');
-        document.querySelector('.js-tail-input').classList.add('choice-select');
+        headInput.style.setProperty('opacity', '0.7');
+        tailInput.style.removeProperty('opacity', '0.7');
+        headInput.classList.remove('choice-select');
+        tailInput.classList.add('choice-select');
         onTouch.play();
       }
       evaluateResult(compAsUserMove);
@@ -119,18 +140,9 @@ function handleAutoPlay(){
     isAutoPlay = true;
   }
   else{
-    document.querySelector('.js-head-input').style.removeProperty('opacity', '0.7');
-    document.querySelector('.js-tail-input').style.removeProperty('opacity', '0.7');
-    document.querySelector('.js-head-input').classList.remove('choice-select');
-    document.querySelector('.js-tail-input').classList.remove('choice-select');
+    removeFeatures();
     document.querySelector('.js-auto-play').innerText = 'Auto Play';
     clearInterval(intervalID);
     isAutoPlay = false;
   }
 }
-
-document.querySelector('.js-auto-play')
-  .addEventListener('click',
-    () => {
-      handleAutoPlay();
-    });
