@@ -1,242 +1,302 @@
-let fillStatus = false;
-let correctChoice;
-let optionsArr = [];
-let compOptsArr = [];
-let playCount = 0;
+let mode = 'Medium';
+let choiceProvidedArr = [];
+let correctOpt;
+const onTouch = new Audio('../resources/onTouch.mp3');
+const onReset = new Audio('../resources/welcome.mp3');
 
 let score = JSON.parse(localStorage.getItem('gtnScore'));
-    if(!score){
-      score = {
-        wins : 0,
-      };
-    }
+if(!score){
+  score = {
+    wins : 0
+  };
+}
+document.querySelector('.score').innerText = score.wins;
 
-function handleReset(status)
-{
+document.querySelector('.playground-gtn')
+  .addEventListener('keydown', (event) => {
+    if(event.key === 'Tab') fillOptions();
+  });
+
+document.querySelector('.js-generate')
+  .addEventListener('click', () => {
+    fillOptions();
+  });
+
+document.getElementById('Easy')
+  .addEventListener('click', () => {
+    mode = 'Easy';
+    handleMode(mode);
+  });
+
+document.getElementById('Medium')
+  .addEventListener('click', () => {
+    mode = 'Medium';
+    handleMode(mode);
+  });
+
+document.getElementById('Hard')
+  .addEventListener('click', () => {
+    mode = 'Hard';
+    handleMode(mode);
+  });
+
+document.querySelector('.js-play-btn')
+  .addEventListener('click', () => {
+    playGTN();
+    console.log('hi');
+  });
+
+document.querySelector('.js-auto-play')
+  .addEventListener('click', () => {
+    fillOptions();
+    handleAutoPlay(mode);
+  });
+
+document.querySelector('.reset-btn')
+  .addEventListener('click', () => {
+    onReset.play();
+    handleReset();
+  });
+
+let userInputVal = document.getElementById('userChoice');
+let userSliderVal = document.getElementById('choiceSelector');
+
+let choicesProvided = document.querySelectorAll('.choices-gtn');
+
+choicesProvided
+  .forEach((value, index) => {
+    choicesProvided[index]
+      .addEventListener('click', () => {
+        if(choicesProvided[index].innerText) {
+          userInputVal.value = parseInt(choicesProvided[index].innerText);
+          onTouch.play();
+          handleSlider();
+          playGTN();
+        }
+      });
+  });
+
+userInputVal
+  .addEventListener('input', () => {
+    handleSlider();
+  });
+
+userInputVal
+  .addEventListener('keydown', (event) => {
+    if(event.key === 'Enter'){
+      console.log('hi');
+      playGTN();
+    }
+  });
+
+userSliderVal
+  .addEventListener('input', () => {
+    userInputVal.value = userSliderVal.value;
+  });
+
+function handleSlider(){
+  userSliderVal.value = userInputVal.value;
+}
+
+function compChoice(){
+  let randomNum = Math.random() * 100;
+  return parseInt(randomNum);
+}
+
+let option1 = document.getElementById('opt1');
+let option2 = document.getElementById('opt2');
+let option3 = document.getElementById('opt3');
+
+function choicesArrGenerator(){
+  choiceProvidedArr = [];
+  if(mode === 'Hard'){
+    choiceProvidedArr.push(compChoice());
+  }
+  else if(mode === 'Medium'){
+    choiceProvidedArr.push(compChoice());
+    let ind1 = compChoice();
+    let ind2 = compChoice();
+    if(choiceProvidedArr.includes(ind1)){
+      if(ind1 >= 95){
+        choiceProvidedArr.push(ind1 - 5);
+      }
+      else{
+        choiceProvidedArr.push(ind1 + 2);
+      }
+    }
+    else choiceProvidedArr.push(ind1);
+    if(choiceProvidedArr.includes(ind2)){
+      if(ind2 >= 95){
+        choiceProvidedArr.push(ind2 - 5);
+      }
+      else{
+        choiceProvidedArr.push(ind2 + 2);
+      }
+    }
+    else choiceProvidedArr.push(ind2);
+  }
+  else{
+    choiceProvidedArr.push(compChoice());
+    let ind1 = compChoice();
+    if(choiceProvidedArr.includes(ind1)){
+      if(ind1 >= 95){
+        choiceProvidedArr.push(ind1 - 5);
+      }
+      else{
+        choiceProvidedArr.push(ind1 + 2);
+      }
+    }
+    else choiceProvidedArr.push(ind1);
+  }
+}
+
+
+function fillOptions(){
+  choicesArrGenerator();
+  correctOptGenerator();
+  if(mode === 'Easy'){
+    option1.innerText = choiceProvidedArr[0];
+    option3.innerText = choiceProvidedArr[1];
+  }
+  else if(mode === 'Medium'){
+    option1.innerText = choiceProvidedArr[0];
+    option2.innerText = choiceProvidedArr[1];
+    option3.innerText = choiceProvidedArr[2];
+  }
+}
+
+function correctOptGenerator(){
+  if(mode === 'Hard'){
+    correctOpt = choiceProvidedArr[0];
+  }
+  else if(mode === 'Medium'){
+    let correctIndex = parseInt((Math.random() * 10) % 2);
+    correctOpt = choiceProvidedArr[correctIndex];
+  }
+  else{
+    let correctIndex = parseInt((Math.random() * 10) % 3);
+    correctOpt = choiceProvidedArr[correctIndex];
+  }
+}
+
+
+let gameResult = document.querySelector('.game-result');
+
+function playGTN(){
+  if(mode === 'Hard') option2.innerText = correctOpt;
+  console.log(parseInt(userInputVal.value));
+  if(correctOpt === parseInt(userInputVal.value)){
+    score.wins += 1;
+    gameResult.classList.add('green-result');
+    gameResult.innerText = 'Victory';
+  }
+  else{
+    gameResult.classList.remove('green-result');
+    gameResult.innerText = 'Defeat';
+  }
+  localStorage.setItem('gtnScore', JSON.stringify(score));
+  document.querySelector('.score').innerText = score.wins;
+  setTimeout(() => {
+    fillOptions();
+  },500);
+  
+}
+
+function handleMode(mode){
+  if(mode === 'Hard'){
+    option2.innerText = '';
+    choiceProvidedArr = [];
+    option2.classList.remove('choices-visibility');
+    option1.classList.add('choices-visibility');
+    option3.classList.add('choices-visibility');
+    fillOptions();
+    pausePlay();
+  }
+  else if(mode === 'Easy'){
+    option3.innerText = '';
+    option1.innerText = '';
+    choiceProvidedArr = [];
+    option1.classList.remove('choices-visibility');
+    option3.classList.remove('choices-visibility');
+    option2.classList.add('choices-visibility');
+    fillOptions();
+    pausePlay();
+  }
+  else{
+    option1.innerText = '';
+    option2.innerText = '';
+    option3.innerText = '';
+    choiceProvidedArr = [];
+    option1.classList.remove('choices-visibility');
+    option3.classList.remove('choices-visibility');
+    option2.classList.remove('choices-visibility');
+    fillOptions();
+    pausePlay();
+  }
+}
+
+function handleReset(){
+  choiceProvidedArr = [];
   localStorage.removeItem('gtnScore');
   score = JSON.parse(localStorage.getItem('gtnScore'));
-  if(score === null){
+  if(!score){
     score = {
       wins : 0
     };
   }
-  
-  document.querySelector('.game-result').classList.add('emote-disabled');
-  if(status === 'Reset') 
-  {
-    document.querySelector('.score').innerText = score.wins;
-    document.querySelector('.reset-btn').innerText = 'Reset Again';
-  }
-  else if(status === 'Reset Again'){
-    handleReset('Reset');
-  }
+  document.querySelector('.score').innerText = score.wins;
+  mode = 'Medium';
+  handleMode(mode);
+  gameResult.innerText = '';
+  fillOptions();
+  pausePlay();
 }
 
-function compChoice(){
-  let randomNo = Math.random();
-  let computerMove = parseInt(randomNo*100);
-  return computerMove;
-}
-
-function fillOptions(mode){
-  if(mode === 'Medium') {
-  optionsArr[0] = compChoice();
-  optionsArr[1] = compChoice();
-  optionsArr[2] = compChoice();
-  document.getElementById('opt1').innerText = optionsArr[0];
-  document.getElementById('opt2').innerText = optionsArr[1];
-  document.getElementById('opt3').innerText = optionsArr[2];
-  findCorrectOption('Medium');
-  }
-  else if(mode === 'Easy') {
-    optionsArr[0] = compChoice();
-    optionsArr[2] = compChoice();
-    document.getElementById('opt1').innerText = optionsArr[0];
-    document.getElementById('opt3').innerText = optionsArr[2];
-    findCorrectOption('Easy');
-  }
-  else if(mode === 'Hard'){
-    optionsArr[1] = compChoice();
-    findCorrectOption('Hard');
-  }
-  fillStatus = true;
-  
-}
-
-let autoPlayID;
 let isAutoPlay = false;
+let intervalId;
 
-function handleAutoPlay(mode){
+function handleAutoPlay(){
+  let autoPlayMove;
   if(!isAutoPlay){
-    fillOptions(mode);
-    document.querySelector('.js-auto-play').innerText = 'Pause Play';
-    autoPlayID = setInterval(function(){
-      fillOptions(mode);
-      document.getElementById('userChoice').value = autoselFromChoice(mode);
-      handleInpField();
-      computeResult(mode);
-    },1800);
+    document.querySelector('.js-auto-play').innerText = "Pause Play";
+    if(mode === 'Easy'){
+      intervalId = setInterval(() => {
+        onTouch.play();
+        let i = parseInt((Math.random() * 10) % 2);
+        autoPlayMove = choiceProvidedArr[i];
+        userInputVal.value = autoPlayMove;
+        userSliderVal.value = autoPlayMove;
+        playGTN();
+      }, 1500);
+    }
+    else if(mode === 'Medium'){
+      intervalId = setInterval(() => {
+        onTouch.play();
+        let i = parseInt((Math.random() * 10) % 3);
+        autoPlayMove = choiceProvidedArr[i];
+        userInputVal.value = autoPlayMove;
+        userSliderVal.value = autoPlayMove;
+        playGTN();
+      }, 1500);
+    }
+    else {
+      intervalId = setInterval(() => {
+        onTouch.play();
+        autoPlayMove = compChoice();
+        userInputVal.value = autoPlayMove;
+        userSliderVal.value = autoPlayMove;
+        playGTN();
+      },1500);
+    }
     isAutoPlay = true;
   }
-  else{
-    clearInterval(autoPlayID);
-    document.querySelector('.js-auto-play').innerText = 'Auto Play';
-    isAutoPlay = false;
+  else {
+    pausePlay();
   }
 }
 
-function autoselFromChoice(mode){
-  let index;
-  let randomNo = parseInt(Math.random()*10);
-  if(mode === 'Easy'){
-    index = parseInt(randomNo%2);
-    if(index === 0){
-      return optionsArr[index];
-    }
-    else if(index === 1){
-      return optionsArr[index+1];
-    }
-  }
-  else if(mode === 'Medium'){
-    index = parseInt(randomNo%3);
-    console.log(`${correctChoice} : ${optionsArr} : ${optionsArr[index]}`);
-    return optionsArr[index];
-  }
-  else if(mode === 'Hard'){
-    return parseInt(randomNo*10);
-  }
-}
-
-function handleTabPress(keyName, mode){
-  if(keyName === 'Tab') fillOptions(mode);
-}
-
-function handleSlider(){
-  let inputFieldVal = document.getElementById('userChoice');
-  let sliderValue = document.getElementById('choiceSelector');
-  inputFieldVal.value = sliderValue.value;
-  sliderValue.oninput = function(){
-    inputFieldVal.value = sliderValue.value;
-  }
-}
-
-function handleInpField(){
-
-  let inputFieldVal = document.getElementById('userChoice');
-  let sliderValue = document.getElementById('choiceSelector');
-  sliderValue.value = inputFieldVal.value;
-  inputFieldVal.oninput = function(){
-    sliderValue.value = inputFieldVal.value;
-  }
-
-}
-
-function findCorrectOption(mode){
-  if(mode === 'Medium') {
-    let randomNo = Math.random()*10;
-    let correctOption = (parseInt(randomNo))%3;
-    if(correctOption === 0) correctChoice = optionsArr[0];
-    else if(correctOption === 1) correctChoice = optionsArr[1];
-    else if(correctOption === 2) correctChoice = optionsArr[2];
-  }
-  else if(mode === 'Easy'){
-    let randomNo = Math.random()*10;
-    let correctOption = (parseInt(randomNo))%2;
-    if(correctOption === 0) correctChoice = optionsArr[0];
-    else if(correctOption === 1) correctChoice = optionsArr[2];
-  }
-  else if(mode === 'Hard'){
-    correctChoice = optionsArr[1];
-  }
-}
-
-function handlePlayCount(mode){
-  if((playCount >= 2 && mode === 'Medium') || (playCount === 1 && mode === 'Easy')){
-    playCount = 0;
-    fillOptions(mode);
-    if(!isAutoPlay){
-      document.getElementById('userChoice').value = '';
-      document.getElementById('choiceSelector').value = 0;
-    }
-  }
-  else if(mode === 'Hard' && playCount === 1){
-    playCount = 0;
-    fillOptions(mode);
-    if(!isAutoPlay){
-      document.getElementById('userChoice').value = '';
-      document.getElementById('choiceSelector').value = 0;
-    }
-  }
-}
-
-function handlePlayChanges(mode){
-  let userChoice = document.getElementById('userChoice').value;
-  if(userChoice !== ''){
-    let userChoiceInt = parseInt(userChoice);
-    if(userChoiceInt === correctChoice) {
-      document.querySelector('.game-result').classList.remove('emote-disabled');
-      document.querySelector('.game-result').innerText = 'Victory';
-      playCount = 0;
-      score.wins += 1;
-      localStorage.setItem('gtnScore', JSON.stringify(score));
-      fillOptions(mode);
-    }
-    else{
-      document.querySelector('.game-result').classList.remove('emote-disabled');
-      document.querySelector('.game-result').innerText = 'Defeat';
-      playCount += 1;
-    }
-  }
-}
-
-function handleMode(mode){
-  fillOptions(mode);
-  if(mode === 'Easy'){
-    document.querySelector('.play-count').style.setProperty('opacity', '0');
-    document.getElementById('opt2').style.setProperty('opacity', '0');
-    document.getElementById('opt1').style.removeProperty('opacity');
-    document.getElementById('opt3').style.removeProperty('opacity');
-  }
-  else if(mode === 'Medium'){
-    document.querySelector('.play-count').style.removeProperty('opacity');
-    document.getElementById('opt1').style.removeProperty('opacity');
-    document.getElementById('opt2').style.removeProperty('opacity');
-    document.getElementById('opt3').style.removeProperty('opacity');
-  }
-  else if(mode === 'Hard'){
-    document.querySelector('.play-count').style.setProperty('opacity', '0');
-    document.getElementById('opt1').style.setProperty('opacity', '0');
-    document.getElementById('opt3').style.setProperty('opacity', '0');
-    document.getElementById('opt2').style.removeProperty('opacity');
-  }
-}
-
-function handleHard(){
-  document.getElementById('opt2').innerText = optionsArr[1];
-}
-
-function assignCompOptValues(){
-  compOptsArr[0] = parseInt(document.getElementById('opt1').innerText);
-  compOptsArr[1] = parseInt(document.getElementById('opt2').innerText);
-  compOptsArr[2] = parseInt(document.getElementById('opt3').innerText);
-}
-
-function computeResult(mode){
-  assignCompOptValues();
-
-  if(mode === 'Easy' && playCount < 1) {
-    handlePlayChanges(mode);
-  }
-  else if(mode === 'Medium' && playCount <= 2){
-    handlePlayChanges(mode);
-  }
-  else if(mode === 'Hard'){
-    handlePlayChanges(mode);
-    handleHard();
-  }
-
-  handlePlayCount(mode);
-
-  document.querySelector('.play-count').innerText = `Play Count : ${playCount}`;
-  document.querySelector('.score').innerText = score.wins;
+function pausePlay(){
+  isAutoPlay = false;
+  document.querySelector('.js-auto-play').innerText = "Auto Play";
+  clearInterval(intervalId);
 }

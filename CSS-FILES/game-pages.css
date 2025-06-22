@@ -79,7 +79,7 @@
 .score {
   width: 60%;
   color: var(--primary-black);
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -155,9 +155,6 @@
   gap: 2rem;
 }
 
-.game-level-container {
-  margin-top: 0rem;
-}
 
 /*Rock Paper Scissors*/
 
@@ -200,80 +197,67 @@
 
 /*GUESS THE NUMBER*/
 
-.gtn-main-section {
-  height: 80vh;
-  gap: 2rem;
+.gtn-page-section{
+  justify-content: center;
 }
 
-.game-header-gtn {
-  width: 100%;
-  position: relative;
-  text-align: center;
+.playground-gtn {
+  gap: 2rem;
+  justify-content: space-evenly;
 }
 
 .choice-sections {
   width: 100%;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  align-items: center;
+  justify-content: space-between;
 }
 
 .choices-gtn {
-  font-size: 3rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-size: 2.5rem;
   border-width: 6px;
   border-color: white;
 }
 
+.choices-visibility{
+  visibility: hidden;
+}
+
 .user-choice-area {
-  display: flex;
-  flex-direction: column;
   gap: 20px;
   justify-content: space-between;
-  align-items: center;
 }
 
 .input-area {
-  display: flex;
   gap: 1rem;
-  justify-content: center;
   align-items: stretch;
   font-size: 2rem;
-}
-
-.play-btn {
-  border: none;
 }
 
 .input-field {
   padding: 5px 10px;
   width: 200px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   border-radius: 5px;
 }
 
-.slider {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
-  text-align: center;
+/*Modifying THe placeholder font size*/
+#userChoice::placeholder{
+  font-size: 1rem;
 }
 
-.slider-values {
-  width: 10%;
+/*Slider Customisation Starts*/
+.slider {
+  width: 100%;
+  justify-content: space-between;
+  gap: 10px;
+  text-align: center;
 }
 
 #choiceSelector {
   -webkit-appearance: none;
   appearance: none;
   width: 80%;
-  height: 10px;
+  height: 5px;
   border-radius: 5px;
   background: #d3d3d3;
   outline: none;
@@ -282,13 +266,7 @@
   margin: 0 auto;
 }
 
-.play-count:hover {
-  background-color: transparent;
-  color: white;
-  border-color: white;
-  cursor: default;
-}
-
+/*Slider Thumb Customisation*/
 #choiceSelector::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -308,14 +286,7 @@
   background: url(../resources/slider-icon.png);
   cursor: pointer;
 }
-
-.playground-gtn {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-}
+/*Slider Ends*/
 
 /*FLIP THE COIN*/
 
