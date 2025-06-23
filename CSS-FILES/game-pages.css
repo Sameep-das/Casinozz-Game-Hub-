@@ -35,12 +35,6 @@
   padding: 0 0 3rem;
 }
 
-/*to adjust navigation bar*/
-.game-page-nav-bar {
-  padding-top: 2rem;
-  margin-bottom: 0;
-}
-
 /*The container of the game - modifies hero-div*/
 .game-page-section {
   width: 80%;
@@ -73,7 +67,7 @@
 .gold-coin-icon {
   background: url(../resources/gold-coin.png) no-repeat;
   background-position: center;
-  background-size: 80% 100%;
+  background-size: cover;
 }
 
 .score {
@@ -370,6 +364,75 @@
 
 /*Mine The GOld */
 
+.mode-and-mine-parent{
+  position: relative;
+  gap: 2rem;
+}
+
+.mode-container{
+  position: absolute;
+  top: 0;
+  left: -70px;
+  width: 50px;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+.mode-name{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  font-family: var(--para-fonts);
+  font-weight: bold;
+  text-align: center;
+}
+
+.mode-name:hover{
+  cursor: pointer;
+}
+
+#Easy{
+  background: rgba(87, 199, 133, 1);
+  color: var(--secondary-purple);
+}
+#Medium{
+  background-color: #ffa500;
+  color: var(--secondary-purple);
+}
+#Hard{
+  background-color: var(--headings-red);
+}
+
+.auto-play-container{
+  position: absolute;
+  top: 150px;
+  left: -70px;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.auto-play-icon{
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  background: url(../resources/play-icon.png) no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.pause-icon{
+  background: url(../resources/pause-icon.png) no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.auto-play-icon:hover{
+  cursor: pointer;
+}
+
 .mine-glass {
   background: rgba(0, 0, 0, 0.403);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -377,30 +440,18 @@
   border-radius: 10px;
 }
 
-.mine-container-flex {
-  width: 500px;
-  height: 100%;
+.mine-container {
+  width: 320px;
   max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding: 10px;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
-.flex-rows {
-  width: 100%;
-  height: calc(100% / 3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-.flex-cells {
-  width: calc(100% / 3);
-  height: 100%;
+.grid-cells {
+  height: 80px;
   border-radius: 10px;
   background: rgba(42, 155, 89, 1);
   background: linear-gradient(
@@ -412,27 +463,17 @@
   transition: background-color 0.7s;
 }
 
-.flex-cells:hover {
+.grid-cells:hover {
   background-color: white;
   cursor: pointer;
 }
 
-/* .flex-cell-blue{
-background: rgba(250, 163, 7, 0.55);
-border-radius: 10px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(7.1px);
--webkit-backdrop-filter: blur(7.1px);
-border: 1px solid rgba(250, 163, 7, 0.13);
-} */
-
-.gold-cells {
+.gold-cell {
   background-image: url(../resources/star-gold.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 60% 60%;
 }
-/* #e5e5e5 grey */
 
 .mine-cell {
   background-image: url(../resources/bomb-icon.png);
