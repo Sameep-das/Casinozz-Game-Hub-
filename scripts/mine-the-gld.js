@@ -2,18 +2,24 @@ let gameMode = 'Easy';
 let mineCellArr = [];
 const cellArr = document.querySelectorAll('.grid-cells');
 const modeArr = document.querySelectorAll('.mode-name');
-let count = 1;
-let multiplierEasy = [0, 1.2, 1.5, 1.8, 2.0, 2.2, 2.5, 2.8, 3.0];
-let multiplierMedium = [0, 1.3, 1.7, 2.0, 2.4, 2.8, 3.0, 3.5];
-let multiplierHard = [0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0];
+let count = 0;
+let multiplier = {
+  'Easy' : ['0x', '1.2x', '1.4x', '1.6x', '1.9x', '2.3x', '2.6x', '2.9x', '3.5x'],
+  'Medium' : ['0x', '1.3x', '1.7x', '2.0x', '2.4x', '2.8x', '3.0x', '3.5x'],
+  'Hard' : ['0x', '1.5x', '2.0x', '2.5x', '3.0x', '3.5x', '4.0x']
+};
+
 let score = {
   wins : '0x'
 };
 
+
+
 modeArr.forEach((val, index) => {
   modeArr[index].addEventListener('click', () => {
     gameMode = modeArr[index].id;
-    generateMineCell();
+    document.querySelector('.current-mode-name').innerText = gameMode;
+    resetGame();
     console.log(gameMode);
     console.log(mineCellArr);
   });
@@ -23,21 +29,29 @@ document.body
   .addEventListener('keydown', (event) => {
     if(event.key === 'e' || event.key === 'E'){
       gameMode = 'Easy';
-      generateMineCell();
+      document.querySelector('.current-mode-name').innerText = gameMode;
+      resetGame();
     }
     else if(event.key === 'm' || event.key === 'M'){
       gameMode = 'Medium';
-      generateMineCell();
+      document.querySelector('.current-mode-name').innerText = gameMode;
+      resetGame();
     }
     else if(event.key === 'h' || event.key === 'H'){
       gameMode = 'Hard';
-      generateMineCell();
+      document.querySelector('.current-mode-name').innerText = gameMode;
+      resetGame();
     }
     else if(event.key === 'Enter'){
-
+      handleWithdraw();
     }
   });
-  
+
+document.querySelector('.withdraw-btn')
+  .addEventListener('click', () => {
+    handleWithdraw();
+  });
+
 document.querySelector('.js-generate')
   .addEventListener('click', () => {
     generateMineCell();
@@ -48,8 +62,8 @@ cellArr.forEach((val, index) => {
   cellArr[index].addEventListener('click', () => {
     let selectID = parseInt(cellArr[index].id);
     if(!userSelectCells.includes(selectID)){
-      document.querySelector('.current-mode-name').innerText = gameMode;
       userSelectCells.push(selectID);
+      playMTG(selectID);
     }
     else{
       document.querySelector('.current-mode-name').innerText = "Please Select Other Box";
@@ -64,9 +78,11 @@ function compChoice(){
 
 function generateMineCell(){
   mineCellArr = [];
+  //In Easy mode only one mine will be present
   if(gameMode === 'Easy'){
     mineCellArr.push(compChoice());
   }
+  //In Medium mode the mineCellArr would contain 2 discrete indices representing the mines
   else if(gameMode === 'Medium'){
     mineCellArr.push(compChoice());
     let ind1 = compChoice();
@@ -82,6 +98,7 @@ function generateMineCell(){
       }
     }
   }
+  //In Hard mode the mineCellArr would contain 3 discrete indices representing the mines
   else if(gameMode === 'Hard'){
     mineCellArr.push(compChoice());
     let ind1 = compChoice();
@@ -122,25 +139,85 @@ function generateMineCell(){
 }
 
 function playMTG(userChoice){
+  document.querySelector('.current-mode-name').innerText = gameMode;
   if(mineCellArr.includes(userChoice)){
     defeatLogic(userChoice);
   }
   else{
-    if(gameMode === 'Easy'){
-      if(count < 8){
-        victoryLogic(userChoice, 'Easy');
-      }
-    }
+    victoryLogic(userChoice);
   }
 }
 
-function victoryLogic(userChoice, mode){
+const victoryPopup = document.querySelector('.victory-popup');
+const defeatPopup = document.querySelector('.defeat-popup');
+function victoryLogic(userChoice){
   count += 1;
   document.getElementById(`${userChoice}`).classList.add('gold-cell');
-  score.wins = `${multiplier`${mode}`[count]}x`;
+  score.wins = multiplier[`${gameMode}`][count];
   document.querySelector('.score').innerText = score.wins;
+  victoryPopup.innerText = score.wins;
+  
+  setTimeout(() => {
+    victoryPopup.classList.remove('show-popup');
+  }, 500);
+  victoryPopup.classList.add('show-popup');
+
+  if(gameMode === 'Easy' && count === 8){
+    setTimeout(() => {
+      resetGame();
+    },800);
+    document.querySelector('.current-mode-name').innerText = "Victory!";
+  }
+  else if(gameMode === 'Medium' && count === 7){
+    
+    setTimeout(() => {
+      resetGame();
+    },800);
+    document.querySelector('.current-mode-name').innerText = "Victory!";
+  }
+  else if(gameMode === 'Hard' && count === 6){
+    
+    setTimeout(() => {
+      resetGame();
+    },800);
+    document.querySelector('.current-mode-name').innerText = "Victory!";
+  }
 }
 
 function defeatLogic(){
 
+  mineCellArr.forEach((val) => {
+    document.getElementById(`${val}`).classList.add('mine-cell');
+  })
+  setTimeout(() => {
+    resetGame();
+  },800);
+  document.querySelector('.current-mode-name').innerText = "OOPs Defeat!";
+  defeatPopup.classList.add('show-popup');
+  
+}
+
+function resetGame(){
+  count = 0;
+  document.querySelector('.current-mode-name').innerText = `${gameMode}`;
+  score.wins = '0x';
+  document.querySelector('.score').innerText = score.wins;
+  defeatPopup.classList.remove('show-popup');
+  victoryPopup.classList.remove('show-popup');
+  userSelectCells.forEach((val) => {
+    document.getElementById(`${val}`).classList.remove('gold-cell');
+  });
+  mineCellArr.forEach((val) => {
+    document.getElementById(`${val}`).classList.remove('mine-cell');
+  });
+  mineCellArr = [];
+  userSelectCells = [];
+  generateMineCell();
+}
+
+function handleWithdraw(){
+  setTimeout(() => {
+    resetGame();
+  }, 800);
+  document.querySelector('.current-mode-name').innerText = "Victory";
 }
