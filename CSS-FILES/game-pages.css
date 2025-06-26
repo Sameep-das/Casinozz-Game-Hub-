@@ -396,13 +396,19 @@
 #Easy{
   background: rgba(87, 199, 133, 1);
   color: var(--secondary-purple);
+  font-weight: bold;
+  border: none;
 }
 #Medium{
   background-color: #ffa500;
   color: var(--secondary-purple);
+  font-weight: bold;
+  border: none;
 }
 #Hard{
   background-color: var(--headings-red);
+  font-weight: bold;
+  border: none;
 }
 
 .auto-play-container{
