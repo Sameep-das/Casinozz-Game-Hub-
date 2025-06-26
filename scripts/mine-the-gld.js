@@ -61,13 +61,13 @@ let userSelectCells = []
 cellArr.forEach((val, index) => {
   cellArr[index].addEventListener('click', () => {
     let selectID = parseInt(cellArr[index].id);
-    if(!userSelectCells.includes(selectID)){
-      userSelectCells.push(selectID);
-      playMTG(selectID);
-    }
-    else{
-      document.querySelector('.current-mode-name').innerText = "Please Select Other Box";
-    }
+      if(!userSelectCells.includes(selectID)){
+        userSelectCells.push(selectID);
+        playMTG(selectID);
+      }
+      else{
+        document.querySelector('.current-mode-name').innerText = "Please Select Other Box";
+      }
   });
 });
 
