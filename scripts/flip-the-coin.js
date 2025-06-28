@@ -1,9 +1,11 @@
+import { playOnReset, playOnTouch } from './utils/audio.js';
+import {getElementByClass, removeClass, addClass, removePropByClass, addClassByID, removeClassByID, changeText, setPropByClass} from './utils/dom_manipulation.js';
+
 const onTouch = new Audio('../resources/onTouch.mp3');
 const onReset = new Audio('../resources/welcome.mp3')
-let tossResult = document.querySelector('.toss-result');
-let outputIcon = document.querySelector('.js-output-icon');
-let headInput = document.querySelector('.js-head-input');
-let tailInput = document.querySelector('.js-tail-input');
+
+let headInput = getElementByClass('js-head-input');
+let tailInput = getElementByClass('js-tail-input');
 
 let score = JSON.parse(localStorage.getItem('ftpScore'));
 if (!score) {
@@ -12,7 +14,7 @@ if (!score) {
   };
 }
 
-document.querySelector('.score').innerText = score.wins;
+changeText('score', score.wins);
 
 function compChoice() {
   let randomNo = Math.random();
@@ -23,7 +25,7 @@ function defineToss(value) {
   if (value >= 0 && value <= 0.5) {
     return "Head";
   }
-  else if (value >= 0.6 && value <= 1) {
+  else if (value > 0.5 && value <= 1) {
     return "Tail";
   }
 }
@@ -31,62 +33,61 @@ function defineToss(value) {
 function evaluateResult(userChoice) {
   let computerMove = defineToss(compChoice());
   if(computerMove === 'Head'){
-    outputIcon.classList.remove('tail-icon');
-    outputIcon.classList.add('head-icon');
+    removeClass('js-output-icon', 'tail-icon');
+    addClass('js-output-icon', 'head-icon');
   } else{
-    outputIcon.classList.remove('head-icon');
-    outputIcon.classList.add('tail-icon');
+    removeClass('js-output-icon', 'head-icon');
+    addClass('js-output-icon', 'tail-icon');
   }
-  tossResult.classList.remove('emote-disabled');
+  
+  removeClass('toss-result', 'emote-disabled');
   if (computerMove === userChoice) {
-    tossResult.classList.add('green-result');
-    tossResult.innerText = "Victory";
+    addClass('toss-result', 'green-result');
+    changeText('toss-result', 'Victory!');
     setTimeout(() => {
-      document.querySelector('.victory-popup').classList.remove('show-popup');
+      removeClass('victory-popup', 'show-popup');
       }, 700);
-    document.querySelector('.victory-popup').classList.add('show-popup');
-    
-    
+    addClass('victory-popup', 'show-popup');
     score.wins += 1;
   }
   else {
-    tossResult.classList.remove('green-result');
-    tossResult.innerText = "Defeat";
+    removeClass('toss-result', 'green-result');
+    changeText('toss-result', 'Oops! Defeat');
     setTimeout(() => {
-      document.querySelector('.defeat-popup').classList.remove('show-popup');
+        removeClass('defeat-popup', 'show-popup');
       }, 700);
-    document.querySelector('.defeat-popup').classList.add('show-popup');
+    addClass('defeat-popup', 'show-popup');
     if (score.wins > 0) {
       score.wins -= 1;
     }
   }
   localStorage.setItem('ftpScore', JSON.stringify(score));
-  document.querySelector('.score').innerText = score.wins;
+  changeText('score', score.wins);
 }
 
 tailInput
   .addEventListener('click',
     () => {
       evaluateResult("Tail");
-      onTouch.play();
+      playOnTouch();
     });
 
 headInput
   .addEventListener('click',
     () => {
       evaluateResult("Head");
-      onTouch.play();
+      playOnTouch();
     });
 
 function removeFeatures(){
-  headInput.style.removeProperty('opacity', '0.7');
-  tailInput.style.removeProperty('opacity', '0.7');
-  headInput.classList.remove('choice-select');
-  tailInput.classList.remove('choice-select');
+  removePropByClass('js-head-input', 'opacity');
+  removePropByClass('js-tail-input', 'opacity');
+  removeClass('js-head-input', 'choice-select');
+  removeClass('js-tail-input', 'choice-select');
 }
 
 function handleReset() {
-  onReset.play();
+  playOnReset();
   removeFeatures();
   localStorage.removeItem('ftpScore');
   score = JSON.parse(localStorage.getItem('ftpScore'));
@@ -95,19 +96,22 @@ function handleReset() {
       wins: 0
     };
   }
-  tossResult.classList.add('emote-disabled');
-  outputIcon.classList.remove('head-icon');
-  outputIcon.classList.remove('tail-icon');
-  document.querySelector('.score').innerText = score.wins;
+  
+  addClass('toss-result', 'emote-disabled');
+  removeClass('js-output-icon', 'head-icon');
+  removeClass('js-output-icon', 'tail-icon');
+  changeText('score', score.wins);
 }
 
-document.querySelector('.reset-btn')
+let resetBtn = getElementByClass('reset-btn');
+resetBtn
   .addEventListener('click',
     () => {
       handleReset();
     });
 
-document.querySelector('.js-auto-play')
+let autoPlayBtn = getElementByClass('js-auto-play');
+autoPlayBtn
   .addEventListener('click',
     () => {
       handleAutoPlay();
@@ -118,22 +122,22 @@ let isAutoPlay = false;
 let intervalID;
 function handleAutoPlay(){
   if(!isAutoPlay){
-    document.querySelector('.js-auto-play').innerText = 'Pause Play';
+    changeText('js-auto-play', 'Pause Play');
     intervalID = setInterval(() => {
       let compAsUserMove = defineToss(compChoice());
       if(compAsUserMove === 'Head'){
-        tailInput.style.setProperty('opacity', '0.7');
-        headInput.style.removeProperty('opacity', '0.7');
-        tailInput.classList.remove('choice-select');
-        headInput.classList.add('choice-select');
-        onTouch.play();
+        setPropByClass('js-tail-input', 'opacity', '0.7');
+        removePropByClass('js-head-input','opacity');
+        removeClass('js-tail-input', 'choice-select');
+        addClass('js-head-input', 'choice-select');
+        playOnTouch();
       }
       else if(compAsUserMove === 'Tail'){
-        headInput.style.setProperty('opacity', '0.7');
-        tailInput.style.removeProperty('opacity', '0.7');
-        headInput.classList.remove('choice-select');
-        tailInput.classList.add('choice-select');
-        onTouch.play();
+        setPropByClass('js-head-input', 'opacity', '0.7');
+        removePropByClass('js-tail-input','opacity');
+        removeClass('js-head-input', 'choice-select');
+        addClass('js-tail-input', 'choice-select');
+        playOnTouch();
       }
       evaluateResult(compAsUserMove);
     }, 2000);
@@ -141,7 +145,7 @@ function handleAutoPlay(){
   }
   else{
     removeFeatures();
-    document.querySelector('.js-auto-play').innerText = 'Auto Play';
+    changeText('js-auto-play', 'Auto Play');
     clearInterval(intervalID);
     isAutoPlay = false;
   }

@@ -1,8 +1,9 @@
+import {changeText} from './utils/dom_manipulation.js';
+import { playOnReset, playOnTouch } from './utils/audio.js';
+
 let mode = 'Medium';
 let choiceProvidedArr = [];
 let correctOpt;
-const onTouch = new Audio('../resources/onTouch.mp3');
-const onReset = new Audio('../resources/welcome.mp3');
 
 let score = JSON.parse(localStorage.getItem('gtnScore'));
 if(!score){
@@ -10,7 +11,7 @@ if(!score){
     wins : 0
   };
 }
-document.querySelector('.score').innerText = score.wins;
+changeText('score', score.wins);
 
 document.querySelector('.playground-gtn')
   .addEventListener('keydown', (event) => {
@@ -43,7 +44,6 @@ document.getElementById('Hard')
 document.querySelector('.js-play-btn')
   .addEventListener('click', () => {
     playGTN();
-    console.log('hi');
   });
 
 document.querySelector('.js-auto-play')
@@ -54,7 +54,7 @@ document.querySelector('.js-auto-play')
 
 document.querySelector('.reset-btn')
   .addEventListener('click', () => {
-    onReset.play();
+    playOnReset();
     handleReset();
   });
 
@@ -69,7 +69,7 @@ choicesProvided
       .addEventListener('click', () => {
         if(choicesProvided[index].innerText) {
           userInputVal.value = parseInt(choicesProvided[index].innerText);
-          onTouch.play();
+          playOnTouch();
           handleSlider();
           playGTN();
         }
@@ -84,7 +84,7 @@ userInputVal
 userInputVal
   .addEventListener('keydown', (event) => {
     if(event.key === 'Enter'){
-      console.log('hi');
+
       playGTN();
     }
   });
@@ -184,7 +184,6 @@ let gameResult = document.querySelector('.game-result');
 
 function playGTN(){
   if(mode === 'Hard') option2.innerText = correctOpt;
-  console.log(parseInt(userInputVal.value));
   if(correctOpt === parseInt(userInputVal.value)){
     score.wins += 1;
     gameResult.classList.add('green-result');
@@ -195,7 +194,7 @@ function playGTN(){
     gameResult.innerText = 'Defeat';
   }
   localStorage.setItem('gtnScore', JSON.stringify(score));
-  document.querySelector('.score').innerText = score.wins;
+  changeText('score', score.wins);
   setTimeout(() => {
     fillOptions();
   },500);
@@ -244,7 +243,7 @@ function handleReset(){
       wins : 0
     };
   }
-  document.querySelector('.score').innerText = score.wins;
+  changeText('score', score.wins);
   mode = 'Medium';
   handleMode(mode);
   gameResult.innerText = '';
@@ -261,7 +260,7 @@ function handleAutoPlay(){
     document.querySelector('.js-auto-play').innerText = "Pause Play";
     if(mode === 'Easy'){
       intervalId = setInterval(() => {
-        onTouch.play();
+        playOnTouch();
         let i = parseInt((Math.random() * 10) % 2);
         autoPlayMove = choiceProvidedArr[i];
         userInputVal.value = autoPlayMove;
@@ -271,7 +270,7 @@ function handleAutoPlay(){
     }
     else if(mode === 'Medium'){
       intervalId = setInterval(() => {
-        onTouch.play();
+        playOnTouch();
         let i = parseInt((Math.random() * 10) % 3);
         autoPlayMove = choiceProvidedArr[i];
         userInputVal.value = autoPlayMove;
@@ -281,7 +280,7 @@ function handleAutoPlay(){
     }
     else {
       intervalId = setInterval(() => {
-        onTouch.play();
+        playOnTouch();
         autoPlayMove = compChoice();
         userInputVal.value = autoPlayMove;
         userSliderVal.value = autoPlayMove;

@@ -1,3 +1,6 @@
+import {getElementByClass, removeClass, addClass, addClassByID, removeClassByID, changeText} from './utils/dom_manipulation.js';
+import { playOnReset, playOnTouch, pauseTouchSound } from './utils/audio.js';
+
 let gameMode = 'Easy';
 let mineCellArr = [];
 const cellArr = document.querySelectorAll('.grid-cells');
@@ -9,7 +12,7 @@ let multiplier = {
   'Hard' : ['0x', '1.5x', '2.0x', '2.5x', '3.0x', '3.5x', '4.0x']
 };
 
-let score = {
+export let score = {
   wins : '0x'
 };
 
@@ -18,10 +21,9 @@ let score = {
 modeArr.forEach((val, index) => {
   modeArr[index].addEventListener('click', () => {
     gameMode = modeArr[index].id;
-    document.querySelector('.current-mode-name').innerText = gameMode;
+    changeText('current-mode-name', gameMode);
+    playOnTouch();
     resetGame();
-    console.log(gameMode);
-    console.log(mineCellArr);
   });
 });
 
@@ -29,17 +31,17 @@ document.body
   .addEventListener('keydown', (event) => {
     if(event.key === 'e' || event.key === 'E'){
       gameMode = 'Easy';
-      document.querySelector('.current-mode-name').innerText = gameMode;
+      changeText('current-mode-name', gameMode);
       resetGame();
     }
     else if(event.key === 'm' || event.key === 'M'){
       gameMode = 'Medium';
-      document.querySelector('.current-mode-name').innerText = gameMode;
+      changeText('current-mode-name', gameMode);
       resetGame();
     }
     else if(event.key === 'h' || event.key === 'H'){
       gameMode = 'Hard';
-      document.querySelector('.current-mode-name').innerText = gameMode;
+      changeText('current-mode-name', gameMode);
       resetGame();
     }
     else if(event.key === 'Enter'){
@@ -63,10 +65,12 @@ cellArr.forEach((val, index) => {
     let selectID = parseInt(cellArr[index].id);
       if(!userSelectCells.includes(selectID)){
         userSelectCells.push(selectID);
+        playOnTouch();
+        
         playMTG(selectID);
       }
       else{
-        document.querySelector('.current-mode-name').innerText = "Please Select Other Box";
+        changeText('current-mode-name', 'Please Select Other Boxes');
       }
   });
 });
@@ -139,7 +143,7 @@ function generateMineCell(){
 }
 
 function playMTG(userChoice){
-  document.querySelector('.current-mode-name').innerText = gameMode;
+  changeText('current-mode-name', gameMode);
   if(mineCellArr.includes(userChoice)){
     defeatLogic(userChoice);
   }
@@ -148,67 +152,65 @@ function playMTG(userChoice){
   }
 }
 
-const victoryPopup = document.querySelector('.victory-popup');
-const defeatPopup = document.querySelector('.defeat-popup');
 function victoryLogic(userChoice){
   count += 1;
-  document.getElementById(`${userChoice}`).classList.add('gold-cell');
+  addClassByID(`${userChoice}`, 'gold-cell');
   score.wins = multiplier[`${gameMode}`][count];
-  document.querySelector('.score').innerText = score.wins;
-  victoryPopup.innerText = score.wins;
+  changeText('score', score.wins);
+  changeText('victory-popup', score.wins);
   
   setTimeout(() => {
-    victoryPopup.classList.remove('show-popup');
+    removeClass('victory-popup', 'show-popup');
   }, 500);
-  victoryPopup.classList.add('show-popup');
+  addClass('victory-popup', 'show-popup');
 
   if(gameMode === 'Easy' && count === 8){
     setTimeout(() => {
       resetGame();
     },800);
-    document.querySelector('.current-mode-name').innerText = "Victory!";
+    changeText('current-mode-name', 'Victory');
   }
   else if(gameMode === 'Medium' && count === 7){
     
     setTimeout(() => {
       resetGame();
     },800);
-    document.querySelector('.current-mode-name').innerText = "Victory!";
+    changeText('current-mode-name', 'Victory');
   }
   else if(gameMode === 'Hard' && count === 6){
     
     setTimeout(() => {
       resetGame();
     },800);
-    document.querySelector('.current-mode-name').innerText = "Victory!";
+    changeText('current-mode-name', 'Victory');
   }
 }
 
 function defeatLogic(){
 
   mineCellArr.forEach((val) => {
-    document.getElementById(`${val}`).classList.add('mine-cell');
+    addClassByID(`${val}`, 'mine-cell');
   })
   setTimeout(() => {
     resetGame();
   },800);
-  document.querySelector('.current-mode-name').innerText = "OOPs Defeat!";
-  defeatPopup.classList.add('show-popup');
+  changeText('current-mode-name', 'Oops! Deafeat');
+  addClass('defeat-popup', 'show-popup');
   
 }
 
 function resetGame(){
   count = 0;
-  document.querySelector('.current-mode-name').innerText = `${gameMode}`;
+  changeText('current-mode-name', gameMode);
   score.wins = '0x';
-  document.querySelector('.score').innerText = score.wins;
-  defeatPopup.classList.remove('show-popup');
-  victoryPopup.classList.remove('show-popup');
+  changeText('score', score.wins);
+  removeClass('defeat-popup', 'show-popup');
+  removeClass('victory-popup', 'show-popup');
   userSelectCells.forEach((val) => {
-    document.getElementById(`${val}`).classList.remove('gold-cell');
+    removeClassByID(`${val}`, 'gold-cell');
   });
   mineCellArr.forEach((val) => {
-    document.getElementById(`${val}`).classList.remove('mine-cell');
+    removeClassByID(`${val}`, 'mine-cell');
   });
   mineCellArr = [];
   userSelectCells = [];
@@ -219,5 +221,6 @@ function handleWithdraw(){
   setTimeout(() => {
     resetGame();
   }, 800);
-  document.querySelector('.current-mode-name').innerText = "Victory";
+  changeText('current-mode-name', 'Victory');
+  playOnReset();
 }

@@ -1,6 +1,6 @@
+import {getElementByClass, removeClass, addClass, setPropByClass, changeText} from './utils/dom_manipulation.js';
+import { playOnReset, playOnTouch } from './utils/audio.js';
 
-const onTouch = new Audio('../resources/onTouch.mp3');
-const onReset = new Audio('../resources/welcome.mp3');
 let score = JSON.parse(localStorage.getItem('rpsScore'));
 if(!score){
   score = {
@@ -9,15 +9,15 @@ if(!score){
     ties : 0
   };
 }
-document.querySelector('.score').innerHTML = score.wins;
-document.querySelector('.js-score').innerText = `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`;
+changeText('score',score.wins);
+changeText('js-score', `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`);
 
 const choiceIconArr = document.querySelectorAll('.js-choice-icon');
 choiceIconArr.forEach((value, index) => {
   choiceIconArr[index].addEventListener('click', () => {
     let userChoice = choiceIconArr[index].id;
     computeScore(computeResult(userChoice));
-    onTouch.play();
+    playOnReset();
   })
 });
 
@@ -25,25 +25,26 @@ document.body
   .addEventListener('keydown', (event) => {
     if(event.key === 'R' || event.key === 'r') {
       computeScore(computeResult('rock'));
-      onTouch.play();
+      playOnReset();
     }
     else if(event.key === 'P' || event.key === 'p'){
       computeScore(computeResult('paper'));
-      onTouch.play();
+      playOnReset();
     }
     else if(event.key === 'S' || event.key === 's'){
       computeScore(computeResult('scissors'));
-      onTouch.play();
+      playOnReset();
     }
     else if(event.key === ' '){
       handleAutoPlay();
     }
   });
 
-document.querySelector('.reset-btn')
+let resetBtn = getElementByClass('reset-btn');
+resetBtn
   .addEventListener('click', () => {
     handleReset();
-    onReset.play();
+    playOnReset();
   });
 
 function handleReset()
@@ -57,13 +58,17 @@ function handleReset()
       ties : 0
     };
   }
-  document.querySelector('.js-score').innerText = `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`;
+  changeText('js-score', `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`);
 
-  document.querySelector('.js-userChoice').classList.add('emote-disabled');
-  document.querySelector('.js-compChoice').classList.add('emote-disabled');
-  document.querySelector('.js-result').classList.add('emote-disabled');
-  document.querySelector('.score').innerHTML = score.wins;
-  document.querySelector('.js-auto-play').innerText = 'Auto Play';
+  // document.querySelector('.js-userChoice').classList.add('emote-disabled');
+  addClass('js-userChoice', 'emote-disabled');
+  // document.querySelector('.js-compChoice').classList.add('emote-disabled');
+  addClass('js-compChoice', 'emote-disabled');
+  // document.querySelector('.js-result').classList.add('emote-disabled');
+  addClass('js-result', 'emote-disabled');
+  changeText('score', score.wins);
+  // document.querySelector('.js-auto-play').innerText = 'Auto Play';
+  changeText('js-auto-play', 'Auto Play');
   clearInterval(autoPlayID);
   isAutoPlay = false;
 }
@@ -93,87 +98,96 @@ function computeResult(userChoice){
     else if(compChoice === 'scissors') result = 0.5;
   }
 
-  let userIcon = document.querySelector('.js-userChoice');
-  let compIcon = document.querySelector('.js-compChoice');
+  let userIcon = getElementByClass('js-userChoice');
+  let compIcon = getElementByClass('js-compChoice');
 
   if(compChoice == 'scissors') {
-    compIcon.style.setProperty('background', `url(../resources/${compChoice}.svg)`);
-    compIcon.style.setProperty('background-size', '60% 60%');
-    compIcon.style.setProperty('background-position', 'center');
-    compIcon.style.setProperty('background-repeat', 'no-repeat');
+    // compIcon.style.setProperty('background', `url(../resources/${compChoice}.svg)`);
+    setPropByClass('js-compChoice', 'background', `url(../resources/scissors.svg) no-repeat`);
+    // compIcon.style.setProperty('background-size', '60% 60%');
+    setPropByClass('js-compChoice', 'background-size', '60% 60%');
+    // compIcon.style.setProperty('background-position', 'center');
+    setPropByClass('js-compChoice', 'background-position', 'center');
   }
   else {
-    compIcon.style.setProperty('background', `url(../resources/${compChoice}.png)`);
-    compIcon.style.setProperty('background-size', '60% 60%');
-    compIcon.style.setProperty('background-position', 'center');
-    compIcon.style.setProperty('background-repeat', 'no-repeat');
+    // compIcon.style.setProperty('background', `url(../resources/${compChoice}.png)`);
+    setPropByClass('js-compChoice', 'background', `url(../resources/${compChoice}.png) no-repeat`);
+    // compIcon.style.setProperty('background-size', '60% 60%');
+    setPropByClass('js-compChoice', 'background-size', '60% 60%');
+    // compIcon.style.setProperty('background-position', 'center');
+    setPropByClass('js-compChoice', 'background-position', 'center');
   }
 
   if(userChoice == 'scissors') {
-    userIcon.style.setProperty('background', `url(../resources/${userChoice}.svg)`);
-    userIcon.style.setProperty('background-size', '60% 60%');
-    userIcon.style.setProperty('background-position', 'center');
-    userIcon.style.setProperty('background-repeat', 'no-repeat');
+    // userIcon.style.setProperty('background', `url(../resources/${userChoice}.svg)`);
+    setPropByClass('js-userChoice', 'background', `url(../resources/scissors.svg) no-repeat`)
+    // compIcon.style.setProperty('background-size', '60% 60%');
+    setPropByClass('js-userChoice', 'background-size', '60% 60%');
+    // compIcon.style.setProperty('background-position', 'center');
+    setPropByClass('js-userChoice', 'background-position', 'center');
   }
   else {
-    userIcon.style.setProperty('background', `url(../resources/${userChoice}.png)`);
-    userIcon.style.setProperty('background-size', '60% 60%');
-    userIcon.style.setProperty('background-position', 'center');
-    userIcon.style.setProperty('background-repeat', 'no-repeat');
+    // userIcon.style.setProperty('background', `url(../resources/${userChoice}.png)`);
+    setPropByClass('js-userChoice', 'background', `url(../resources/${userChoice}.png) no-repeat`)
+    // compIcon.style.setProperty('background-size', '60% 60%');
+    setPropByClass('js-userChoice', 'background-size', '60% 60%');
+    // compIcon.style.setProperty('background-position', 'center');
+    setPropByClass('js-userChoice', 'background-position', 'center');
   }
   
   
   return result;
 }
 
-let gameResult = document.querySelector('.js-result');
-
 function computeScore(result){
-  document.querySelector('.js-userChoice').classList.remove('emote-disabled');
-  document.querySelector('.js-compChoice').classList.remove('emote-disabled');
-  document.querySelector('.js-result').classList.remove('emote-disabled');
+  removeClass('js-compChoice','emote-disabled');
+  removeClass('js-userChoice', 'emote-disabled');
+  removeClass('js-result', 'emote-disabled');
 
   if(result === 1){
     score.wins += 1;
-    gameResult.style.setProperty('color', '#adff2f');
-    gameResult.innerText = 'Victory!';
+    removeClass('js-result', 'white-result');
+    addClass('js-result', 'green-result');
+    changeText('js-result', 'Victory!');
   }
   else if(result === 0.5){
     score.ties += 1;
-    gameResult.style.setProperty('color', '#ffffff');
-    gameResult.innerText = 'Game Tie';
+    removeClass('js-result', 'green-result');
+    addClass('js-result', 'white-result');
+    changeText('js-result','Game Tie');
   }
   else{
     score.losses += 1;
-    gameResult.style.setProperty('color', '#F01B1B');
-    document.querySelector('.js-result').innerText = 'Oops! Defeat';
+    removeClass('js-result', 'white-result');
+    removeClass('js-result', 'green-result');
+    changeText('js-result', 'Oops! Defeat');
   }
 
   localStorage.setItem('rpsScore', JSON.stringify(score));
-  document.querySelector('.score').innerText = score.wins;
-  document.querySelector('.js-score').innerText = `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`;
+  changeText('score', score.wins);
+  changeText('js-score', `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`);
 }
 
 
 let autoPlayID;
 let isAutoPlay = false;
-
-document.querySelector('.js-auto-play')
+let autoPlayBtn = getElementByClass('js-auto-play');
+autoPlayBtn
   .addEventListener('click', () => {
     handleAutoPlay();
   });
 
 function handleAutoPlay(){
   if(!isAutoPlay){
-    document.querySelector('.js-auto-play').innerText = 'Pause Play';
+    changeText('js-auto-play', 'Pause Play');
     autoPlayID = setInterval(function(){
       computeScore(computeResult(compChoiceGenerator()));
-      onTouch.play();
+      playOnReset();
     }, 1800);
     isAutoPlay = true;
   }
   else {
-    document.querySelector('.js-auto-play').innerText = 'Auto Play';
+    changeText('js-auto-play', 'Auto Play');
     clearInterval(autoPlayID);
     isAutoPlay = false;
   }
