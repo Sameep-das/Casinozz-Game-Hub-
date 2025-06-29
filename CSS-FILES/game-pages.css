@@ -125,7 +125,6 @@
 
 /*Wraps Icon and Name Of The Player*/
 .choice-wrapper {
-  width: 50%;
   text-align: center;
   gap: 1rem;
 }
@@ -216,6 +215,7 @@
 
 .choice-sections {
   width: 100%;
+  gap: 20px;
   text-align: center;
   justify-content: space-between;
 }
@@ -227,7 +227,7 @@
 }
 
 .choices-visibility{
-  visibility: hidden;
+  display: none;
 }
 
 .user-choice-area {
@@ -358,6 +358,7 @@
   transform: translate(-50%, -50%) scale(0.1);
   visibility: hidden;
   transition: transform 0.4s, scale 0.4s, bottom 0.4s;
+  z-index: 5;
 }
 
 .victory-popup {

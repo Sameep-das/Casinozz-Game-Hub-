@@ -23,6 +23,7 @@ export let score = {
 modeArr.forEach((val, index) => {
   modeArr[index].addEventListener('click', () => {
     gameMode = modeArr[index].id;
+    removeClass('current-mode-name','green-result');
     changeText('current-mode-name', gameMode);
     onTouch.play();
     resetGame();
@@ -33,16 +34,19 @@ document.body
   .addEventListener('keydown', (event) => {
     if(event.key === 'e' || event.key === 'E'){
       gameMode = 'Easy';
+      removeClass('current-mode-name','green-result');
       changeText('current-mode-name', gameMode);
       resetGame();
     }
     else if(event.key === 'm' || event.key === 'M'){
       gameMode = 'Medium';
+      removeClass('current-mode-name','green-result');
       changeText('current-mode-name', gameMode);
       resetGame();
     }
     else if(event.key === 'h' || event.key === 'H'){
       gameMode = 'Hard';
+      removeClass('current-mode-name','green-result');
       changeText('current-mode-name', gameMode);
       resetGame();
     }
@@ -73,6 +77,7 @@ cellArr.forEach((val, index) => {
         playMTG(selectID);
       }
       else{
+        removeClass('current-mode-name','green-result');
         changeText('current-mode-name', 'Please Select Other Boxes');
       }
   });
@@ -146,6 +151,7 @@ function generateMineCell(){
 }
 
 function playMTG(userChoice){
+  removeClass('current-mode-name','green-result');
   changeText('current-mode-name', gameMode);
   if(mineCellArr.includes(userChoice)){
     defeatLogic(userChoice);
@@ -171,6 +177,7 @@ function victoryLogic(userChoice){
     setTimeout(() => {
       resetGame();
     },800);
+    addClass('current-mode-name','green-result')
     changeText('current-mode-name', 'Victory');
   }
   else if(gameMode === 'Medium' && count === 7){
@@ -178,6 +185,7 @@ function victoryLogic(userChoice){
     setTimeout(() => {
       resetGame();
     },800);
+    addClass('current-mode-name','green-result')
     changeText('current-mode-name', 'Victory');
   }
   else if(gameMode === 'Hard' && count === 6){
@@ -185,6 +193,7 @@ function victoryLogic(userChoice){
     setTimeout(() => {
       resetGame();
     },800);
+    addClass('current-mode-name','green-result')
     changeText('current-mode-name', 'Victory');
   }
 }
@@ -197,6 +206,7 @@ function defeatLogic(){
   setTimeout(() => {
     resetGame();
   },800);
+  removeClass('current-mode-name','green-result')
   changeText('current-mode-name', 'Oops! Deafeat');
   addClass('defeat-popup', 'show-popup');
   
@@ -204,6 +214,7 @@ function defeatLogic(){
 
 function resetGame(){
   count = 0;
+  removeClass('current-mode-name','green-result')
   changeText('current-mode-name', gameMode);
   score.wins = '0x';
   changeText('score', score.wins);
@@ -224,6 +235,7 @@ function handleWithdraw(){
   setTimeout(() => {
     resetGame();
   }, 800);
+  addClass('current-mode-name','green-result')
   changeText('current-mode-name', 'Victory');
   onReset.play();
 }

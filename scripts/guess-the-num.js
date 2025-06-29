@@ -185,7 +185,9 @@ function correctOptGenerator(){
 let gameResult = document.querySelector('.game-result');
 
 function playGTN(){
-  if(mode === 'Hard') option2.innerText = correctOpt;
+  if(mode === 'Hard'){
+    option2.innerText = correctOpt;
+  }
   if(correctOpt === parseInt(userInputVal.value)){
     score.wins += 1;
     gameResult.classList.add('green-result');

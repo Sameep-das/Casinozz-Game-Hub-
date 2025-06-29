@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="../CSS-FILES/casino-style.css">
   <link rel="stylesheet" href="../CSS-FILES/game-pages.css">
+  <link rel="stylesheet" href="../CSS-FILES/media-queries.css">
 </head>
 <body>
   <div class="whole-flex flex-col">
@@ -21,14 +22,14 @@
 
       <main class="hero-container">
         <section class="glass hero-div flex-col game-page-section">
-          <div class="game-header">
+          <div class="game-header rps-gm-header">
             <h1>
               <a href="#" class="logo">
               Rock-Paper-Scissors
               </a>
             </h1>
 
-            <div class="score-board flex-row">
+            <div class="score-board rps-sc-board flex-row">
               <div class="score-icon"></div>
               <div class="score"></div>
             </div>
@@ -44,11 +45,11 @@
             <div class="game-output flex-col">
               <div class="choice-outputs">
                 <div class="choice-wrapper flex-col comp-choice-wrapper">
-                  <div class="choice-output-icon js-compChoice"></div>
+                  <div class="choice-output-icon js-compChoice mq-choice"></div>
                   <div class="choice-name">Computer</div>
                 </div>
                 <div class="choice-wrapper flex-col user-choice-wrapper">
-                  <div class="choice-output-icon js-userChoice"></div>
+                  <div class="choice-output-icon js-userChoice mq-choice"></div>
                   <div class="choice-name">Avenger</div>
                 </div>
               </div>
