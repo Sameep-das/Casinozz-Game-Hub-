@@ -333,6 +333,10 @@
     width: 100px;
   }
 
+  #search-bar{
+    width: 100%;
+  }
+
   .slider{
     justify-content: center;
     gap: 10px;
@@ -347,6 +351,10 @@
 @media (max-width: 465px){
   .input-field{
     width: 80px;
+  }
+
+  #search-bar{
+    width: 100%;
   }
 
   #choiceSelector{
