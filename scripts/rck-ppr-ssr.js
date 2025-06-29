@@ -1,7 +1,7 @@
 import {getElementByClass, removeClass, addClass, setPropByClass, changeText} from './utils/dom_manipulation.js';
 
 const onReset = new Audio('../resources/welcome.mp3');
-const onTouch = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/onTouch.mp3');
 
 let score = JSON.parse(localStorage.getItem('rpsScore'));
 if(!score){

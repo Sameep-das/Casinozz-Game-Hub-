@@ -1,7 +1,7 @@
 import {getElementByClass, removeClass, addClass, removePropByClass, addClassByID, removeClassByID, changeText, setPropByClass} from './utils/dom_manipulation.js';
 
 const onReset = new Audio('../resources/welcome.mp3');
-const onTouch = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/onTouch.mp3');
 
 let headInput = getElementByClass('js-head-input');
 let tailInput = getElementByClass('js-tail-input');

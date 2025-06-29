@@ -55,5 +55,45 @@
   :root{
     font-size: 8px;
   }
-  
+}
+
+@media (max-width: 900px){
+  .score-board{
+    width: 100px;
+  }
+  .score{
+    font-size: 15px;
+  }
+  .score-icon{
+    height: 35px;
+  }
+}
+
+@media (max-width : 768px){
+  .score-board{
+    width: auto;
+  }
+  .score-icon{
+    width: 30px;
+  }
+}
+
+@media (max-width: 600px){
+  .game-header{
+    flex-direction: column;
+  }
+  .score-board{
+    position: static;
+  }
+}
+
+@media (max-width : 400px){
+  .ftp-choice-icon{
+    width: 75px;
+    height: 75px;
+  }
+  .choice-output-icon{
+    width: 100px;
+    height: 100px;
+  }
 }

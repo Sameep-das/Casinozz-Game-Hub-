@@ -1,7 +1,7 @@
 import {changeText} from './utils/dom_manipulation.js';
 
 const onReset = new Audio('../resources/welcome.mp3');
-const onTouch = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/onTouch.mp3');
 
 let mode = 'Medium';
 let choiceProvidedArr = [];
@@ -199,7 +199,7 @@ function playGTN(){
   changeText('score', score.wins);
   setTimeout(() => {
     fillOptions();
-  },500);
+  },800);
   
 }
 
