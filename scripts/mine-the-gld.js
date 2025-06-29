@@ -1,5 +1,7 @@
 import {getElementByClass, removeClass, addClass, addClassByID, removeClassByID, changeText} from './utils/dom_manipulation.js';
-import * as audio from './utils/audio.js';
+
+const onReset = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/welcome.mp3');
 
 let gameMode = 'Easy';
 let mineCellArr = [];
@@ -22,7 +24,7 @@ modeArr.forEach((val, index) => {
   modeArr[index].addEventListener('click', () => {
     gameMode = modeArr[index].id;
     changeText('current-mode-name', gameMode);
-    audio.onTouch.play();
+    onTouch.play();
     resetGame();
   });
 });
@@ -65,7 +67,7 @@ cellArr.forEach((val, index) => {
     let selectID = parseInt(cellArr[index].id);
       if(!userSelectCells.includes(selectID)){
         userSelectCells.push(selectID);
-        audio.onTouch.play();
+        onTouch.play();
         
         playMTG(selectID);
       }
@@ -222,5 +224,5 @@ function handleWithdraw(){
     resetGame();
   }, 800);
   changeText('current-mode-name', 'Victory');
-  playOnReset();
+  onReset.play();
 }

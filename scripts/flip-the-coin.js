@@ -1,6 +1,7 @@
-import * as audio from './utils/audio.js';
 import {getElementByClass, removeClass, addClass, removePropByClass, addClassByID, removeClassByID, changeText, setPropByClass} from './utils/dom_manipulation.js';
 
+const onReset = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/welcome.mp3');
 
 let headInput = getElementByClass('js-head-input');
 let tailInput = getElementByClass('js-tail-input');
@@ -67,14 +68,14 @@ tailInput
   .addEventListener('click',
     () => {
       evaluateResult("Tail");
-      audio.onTouch.play();
+      onTouch.play();
     });
 
 headInput
   .addEventListener('click',
     () => {
       evaluateResult("Head");
-      audio.onTouch.play();
+      onTouch.play();
     });
 
 function removeFeatures(){
@@ -85,7 +86,7 @@ function removeFeatures(){
 }
 
 function handleReset() {
-  audio.onReset.play();
+  onReset.play();
   removeFeatures();
   localStorage.removeItem('ftpScore');
   score = JSON.parse(localStorage.getItem('ftpScore'));
@@ -128,14 +129,14 @@ function handleAutoPlay(){
         removePropByClass('js-head-input','opacity');
         removeClass('js-tail-input', 'choice-select');
         addClass('js-head-input', 'choice-select');
-        audio.onTouch.play();
+        onTouch.play();
       }
       else if(compAsUserMove === 'Tail'){
         setPropByClass('js-head-input', 'opacity', '0.7');
         removePropByClass('js-tail-input','opacity');
         removeClass('js-head-input', 'choice-select');
         addClass('js-tail-input', 'choice-select');
-        audio.onTouch.play();
+        onTouch.play();
       }
       evaluateResult(compAsUserMove);
     }, 2000);

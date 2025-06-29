@@ -1,5 +1,7 @@
 import {changeText} from './utils/dom_manipulation.js';
-import * as audio from './utils/audio.js';
+
+const onReset = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/welcome.mp3');
 
 let mode = 'Medium';
 let choiceProvidedArr = [];
@@ -54,7 +56,7 @@ document.querySelector('.js-auto-play')
 
 document.querySelector('.reset-btn')
   .addEventListener('click', () => {
-    audio.onReset.play();
+    onReset.play();
     handleReset();
   });
 
@@ -69,7 +71,7 @@ choicesProvided
       .addEventListener('click', () => {
         if(choicesProvided[index].innerText) {
           userInputVal.value = parseInt(choicesProvided[index].innerText);
-          audio.onTouch.play();
+          onTouch.play();
           handleSlider();
           playGTN();
         }
@@ -260,7 +262,7 @@ function handleAutoPlay(){
     document.querySelector('.js-auto-play').innerText = "Pause Play";
     if(mode === 'Easy'){
       intervalId = setInterval(() => {
-        audio.onTouch.play();
+        onTouch.play();
         let i = parseInt((Math.random() * 10) % 2);
         autoPlayMove = choiceProvidedArr[i];
         userInputVal.value = autoPlayMove;
@@ -270,7 +272,7 @@ function handleAutoPlay(){
     }
     else if(mode === 'Medium'){
       intervalId = setInterval(() => {
-        audio.onTouch.play();
+        onTouch.play();
         let i = parseInt((Math.random() * 10) % 3);
         autoPlayMove = choiceProvidedArr[i];
         userInputVal.value = autoPlayMove;
@@ -280,7 +282,7 @@ function handleAutoPlay(){
     }
     else {
       intervalId = setInterval(() => {
-        audio.onTouch.play();
+        onTouch.play();
         autoPlayMove = compChoice();
         userInputVal.value = autoPlayMove;
         userSliderVal.value = autoPlayMove;

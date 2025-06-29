@@ -1,5 +1,7 @@
 import {getElementByClass, removeClass, addClass, setPropByClass, changeText} from './utils/dom_manipulation.js';
-import * as audio from './utils/audio.js';
+
+const onReset = new Audio('../resources/welcome.mp3');
+const onTouch = new Audio('../resources/welcome.mp3');
 
 let score = JSON.parse(localStorage.getItem('rpsScore'));
 if(!score){
@@ -17,7 +19,7 @@ choiceIconArr.forEach((value, index) => {
   choiceIconArr[index].addEventListener('click', () => {
     let userChoice = choiceIconArr[index].id;
     computeScore(computeResult(userChoice));
-    audio.onTouch.play();
+    onTouch.play();
   })
 });
 
@@ -25,15 +27,15 @@ document.body
   .addEventListener('keydown', (event) => {
     if(event.key === 'R' || event.key === 'r') {
       computeScore(computeResult('rock'));
-      audio.onTouch.play();
+      onTouch.play();
     }
     else if(event.key === 'P' || event.key === 'p'){
       computeScore(computeResult('paper'));
-      audio.onTouch.play();
+      onTouch.play();
     }
     else if(event.key === 'S' || event.key === 's'){
       computeScore(computeResult('scissors'));
-      audio.onTouch.play();
+      onTouch.play();
     }
     else if(event.key === ' '){
       handleAutoPlay();
@@ -44,7 +46,7 @@ let resetBtn = getElementByClass('reset-btn');
 resetBtn
   .addEventListener('click', () => {
     handleReset();
-    audio.onReset.play();
+    onReset.play();
   });
 
 function handleReset()
@@ -182,7 +184,7 @@ function handleAutoPlay(){
     changeText('js-auto-play', 'Pause Play');
     autoPlayID = setInterval(function(){
       computeScore(computeResult(compChoiceGenerator()));
-      audio.onTouch.play();
+      onTouch.play();
     }, 1800);
     isAutoPlay = true;
   }
