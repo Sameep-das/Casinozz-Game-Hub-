@@ -81,6 +81,7 @@
 @media (max-width: 600px){
   .game-header{
     flex-direction: column;
+    gap: 20px;
   }
   .score-board{
     position: static;
@@ -95,5 +96,104 @@
   .choice-output-icon{
     width: 100px;
     height: 100px;
+  }
+}
+
+@media (min-width : 635px) and (max-width : 768px){
+  .mine-container{
+    width: 275px;
+    height: 275px;
+  }
+  .mode-container{
+    left: -55px;
+  }
+}
+
+@media (min-width : 570px) and (max-width : 634.9999px){
+  .mine-container{
+    width: 250px;
+    height: 250px;
+  }
+  .mode-container{
+    left: -50px;
+    width: 40px;
+  }
+  .mode-name{
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (min-width : 425px) and (max-width : 569.9999px){
+  .mine-container{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    right: -20px;
+  }
+  .mode-container{
+    left: -30px;
+    width: 36px;
+
+  }
+  .mode-name{
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+}
+
+@media (min-width : 350px) and (max-width : 424.9999px){
+  .mine-container{
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+    column-gap: 5px;
+    row-gap: 5px;
+    position: relative;
+    right: -20px;
+  }
+  .mode-container{
+    left: -20px;
+    width: 30px;
+
+  }
+  .mode-name{
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+}
+
+@media (max-width : 349.999px){
+  :root{
+    font-size: 6.8px;
+  }
+  
+  .mine-media-con{
+    gap : 5rem;
+  }
+
+  .mine-container{
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+    column-gap: 5px;
+    row-gap: 5px;
+  }
+  .mode-container{
+    top: -30px;
+    left: 50%;
+    width: auto;
+    padding: 2px;
+    height: 22px;
+    flex-direction: row;
+    gap: 5px;
+    transform: translate(-50%, 0%);
+  }
+  .mode-name{
+    width: 18px;
+    height: 18px;
+    font-size: 6px;
   }
 }

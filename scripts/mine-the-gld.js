@@ -58,7 +58,8 @@ document.querySelector('.withdraw-btn')
 
 document.querySelector('.js-generate')
   .addEventListener('click', () => {
-    generateMineCell();
+    if(!userSelectCells.length) generateMineCell();
+    else changeText('current-mode-name', 'Withdraw This Game!')
   });
 
 let userSelectCells = []

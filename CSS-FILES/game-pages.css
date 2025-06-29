@@ -462,6 +462,7 @@
 
 .mine-container {
   width: 320px;
+  height: 320px;
   max-height: 100%;
   padding: 10px;
   display: grid;
@@ -471,7 +472,6 @@
 }
 
 .grid-cells {
-  height: 80px;
   border-radius: 10px;
   background: rgba(42, 155, 89, 1);
   background: linear-gradient(
