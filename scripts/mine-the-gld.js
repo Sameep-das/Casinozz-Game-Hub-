@@ -1,5 +1,5 @@
 import {getElementByClass, removeClass, addClass, addClassByID, removeClassByID, changeText} from './utils/dom_manipulation.js';
-import { playOnReset, playOnTouch, pauseTouchSound } from './utils/audio.js';
+import * as audio from './utils/audio.js';
 
 let gameMode = 'Easy';
 let mineCellArr = [];
@@ -22,7 +22,7 @@ modeArr.forEach((val, index) => {
   modeArr[index].addEventListener('click', () => {
     gameMode = modeArr[index].id;
     changeText('current-mode-name', gameMode);
-    playOnTouch();
+    audio.onTouch.play();
     resetGame();
   });
 });
@@ -65,7 +65,7 @@ cellArr.forEach((val, index) => {
     let selectID = parseInt(cellArr[index].id);
       if(!userSelectCells.includes(selectID)){
         userSelectCells.push(selectID);
-        playOnTouch();
+        audio.onTouch.play();
         
         playMTG(selectID);
       }
