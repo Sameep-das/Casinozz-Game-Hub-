@@ -58,6 +58,11 @@ body{
   font-family: var(--para-fonts);
   font-size: 1rem;
   color: var(--secondary-white);
+  background-image: url("../resources/bg-body.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode:darken;
 }
 
 /*Utilities*/
@@ -141,11 +146,6 @@ input[type=number]::placeholder{
 .whole-flex{
   width: 100%;
   height: auto;
-  background-image: url("../resources/bg-body.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode:darken;
   gap: 5rem;
 }
 
@@ -161,8 +161,10 @@ input[type=number]::placeholder{
 /*First child of whole-flex*/
 .header{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding: 2rem 0 0;
+  display: flex;
+  flex-direction: column;
 }
 
 /*First child to Header*/
@@ -199,6 +201,7 @@ input[type=number]::placeholder{
   height: 80%;
   margin: 0 auto;
   position: relative;
+  flex-grow: 1;
 }
 
 /*Mini icons over the hero container - direct children to the hero container*/
@@ -211,8 +214,6 @@ input[type=number]::placeholder{
 /*top-right dice*/
 .icon-top-right{
   width: 250px;
-  max-width: 250px;
-  min-width: 150px;
   height: 250px;
   top: -1rem;
   right: -50px;
@@ -229,7 +230,7 @@ input[type=number]::placeholder{
   min-width: 250px;
   max-width: 400px;
   bottom: 0.1rem;
-  left: -1rem;
+  left: -50px;
   background: url(../resources/cards-in-hand.png);
   background-position: center;
   background-size: contain;
@@ -248,6 +249,10 @@ input[type=number]::placeholder{
   position: relative;
   font-size: 1.5rem;
   gap: 4rem;
+}
+
+.main-page-hero{
+  flex-grow: 0.8;
 }
 
 /*Contains logo and Subtitle - Direct Child to hero-div*/
@@ -343,9 +348,10 @@ input[type=number]::placeholder{
 }
 
 .cta-btn-container{
-  display: flex;
-  justify-content: center;
-  margin: 2rem;
+  width: 80%;
+  display: grid;
+  grid-template-columns: auto 3fr 50px;
+  margin: 2rem auto;
 }
 
 .join-cta-btn{
@@ -357,9 +363,7 @@ input[type=number]::placeholder{
   border: none;
   border-radius: 0;
   padding: 0 10px;
-  width: 500px;
-  max-width:600px;
-  min-width: 150px;
+  width: 100%;
   color: var(--primary-white);
 }
 
@@ -420,7 +424,7 @@ input:focus{
 
 .link-icon{
   display: inline-block;
-  width: 50px;
+  width: 25px;
   height: 1rem;
   background: url(../resources/link-icon.png);
   background-size: contain;
@@ -522,3 +526,7 @@ input:focus{
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+
+/*Media Queries*/
+

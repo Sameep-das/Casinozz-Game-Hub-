@@ -1,0 +1,59 @@
+@media (max-width : 80rem){
+  .game-card-container{
+    grid-template-columns : repeat(2, 1fr);
+  }
+}
+
+@media (max-width : 75rem){
+  :root{
+    font-size: 10px;
+  }
+  .cta-info{
+    width : 95%;
+  }
+}
+
+@media (max-width : 954px){
+  .hero-info{
+    width: 80%;
+  }
+  .icon-top-right{
+    width: 150px;
+    top: -50px;
+  }
+  .icon-bottom-left{
+    width: 200px;
+    height: 350px;
+  }
+}
+
+@media (max-width : 769px){
+  .icon-top-right{
+    width: 120px;
+  }
+  .icon-bottom-left{
+    width: 150px;
+    height: 300px;
+  }
+
+  .icon-top-right{
+    right: -20px;
+  }
+  .game-card-container{
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+} 
+
+@media (max-width : 653px){
+  .link-icon{
+    display: none;
+  }
+}
+
+@media (max-width: 450px){
+  :root{
+    font-size: 8px;
+  }
+  
+}
