@@ -8,13 +8,13 @@ const tracker = new CasinozzTracker('guess');
 tracker.startSession('medium');
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = window.CASINOZZ_ML || 'http://localhost:5001';
+const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
 let playerGuessHistory = [];
 let currentGuessMode = 'medium';
 
 async function fetchAiCorrectOpt(numOptions) {
   try {
-    const res = await fetch(`${ML_BASE}/ml/ai_move`, {
+    const res = await fetch(`${ML_BASE}/ai_move`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ game: 'guess', last_moves: playerGuessHistory, difficulty: currentGuessMode })

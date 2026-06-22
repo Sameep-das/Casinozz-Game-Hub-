@@ -46,8 +46,33 @@ const authLimiter = rateLimit({
 });
 
 // ── 6. HEALTH CHECK ──────────────────────────────────────────────────────────
+let mlWarmStarted = false;
+async function warmML() {
+    try {
+        const response = await fetch(`${process.env.ML_SERVICE_URL}/health`);
+
+        if (!response.ok) {
+            throw new Error("ML health check failed");
+        }
+    } catch (err) {
+        console.error("[ML] Warmup failed:", err.message);
+    }
+}
+
+
 app.get('/health', (req, res) => {
-    res.json({ status: 'healthy', service: 'node-backend', uptime: process.uptime() });
+    if (!mlWarmStarted) {
+        mlWarmStarted = true;
+        warmML()
+            .finally(() => {
+                mlWarmStarted = false;
+            });
+    }
+    res.json({
+        status: 'healthy',
+        service: 'node-backend',
+        uptime: process.uptime()
+    });
 });
 
 // ── 7. ROUTES ────────────────────────────────────────────────────────────────

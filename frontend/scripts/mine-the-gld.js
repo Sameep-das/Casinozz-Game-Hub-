@@ -22,12 +22,12 @@ const tracker = new CasinozzTracker('mine');
 tracker.startSession('easy');
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = window.CASINOZZ_ML || 'http://localhost:5001';
+const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
 let playerCellHistory = [];
 
 async function fetchAiMineCells(mode) {
   try {
-    const res = await fetch(`${ML_BASE}/ml/ai_move`, {
+    const res = await fetch(`${ML_BASE}/ai_move`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ game: 'mine', last_moves: playerCellHistory, difficulty: gameMode.toLowerCase(), mode: mode.toLowerCase() })

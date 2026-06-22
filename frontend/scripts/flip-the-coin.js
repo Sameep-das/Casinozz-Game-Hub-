@@ -25,7 +25,7 @@ const tracker = new CasinozzTracker('coin');
 tracker.startSession('easy');
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = window.CASINOZZ_ML || 'http://localhost:5001';
+const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
 let playerCoinHistory = [];
 let currentCoinMode = 'easy';
 
@@ -33,7 +33,7 @@ async function fetchAiCoin(userChoice) {
   playerCoinHistory.push(userChoice);
   if (playerCoinHistory.length > 20) playerCoinHistory.shift();
   try {
-    const res = await fetch(`${ML_BASE}/ml/ai_move`, {
+    const res = await fetch(`${ML_BASE}/ai_move`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ game: 'coin', last_moves: playerCoinHistory, difficulty: currentCoinMode })

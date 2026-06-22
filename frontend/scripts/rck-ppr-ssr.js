@@ -21,29 +21,119 @@ const onTouch = new Audio("../resources/onTouch.mp3");
 const tracker = new CasinozzTracker('rps');
 tracker.startSession('easy');
 
+//-------------EVENT LISTENER LIST--------------//
+
+//LISTEN TO THE USER INPUT FOR ROCK
+// let playerMove = null;
+class PlayerMove {
+  constructor(size = 20) {
+    this.currentIndex = 0;
+    this.size = size;
+    this.playerMoveHistory = [];
+  }
+
+  #isFull() {
+    return this.currentIndex >= this.size;
+  }
+
+  push(playerMove) {
+    if(!playerMove) return;
+    if(isFull()) {
+      this.playerMoveHistory = [];
+      this.currentIndex = 0;
+    }
+    playerMoveHistory.push(playerMove);
+    this.currentIndex++;
+  }
+}
+
+const player = new PlayerMove();
+
+let rckBtn = document.getElementById("rock");
+rckBtn.addEventListener("click", async () => {
+  handleMove(RPS_CHOICES.ROCK);
+});
+
+//LISTEN TO THE USER INPUT FOR PAPER
+let pprBtn = document.getElementById("paper");
+pprBtn.addEventListener("click", async () => {
+  handleMove(RPS_CHOICES.PAPER);
+});
+
+//LISTEN TO THE USER INPUT FOR SCISSOR
+let ssrBtn = document.getElementById("scissors");
+ssrBtn.addEventListener("click", async () => {
+  handleMove(RPS_CHOICES.SCISSOR);
+});
+
+
+
+//TAKE INPUT DIRECTLY FROM KEYBOARD
+document.body.addEventListener("keydown", (event) => {
+  let playerMove = null;
+  if(event.key === " "){
+    handleAutoPlay();
+    return;
+  }
+  if (event.key === "R" || event.key === "r") {
+    playerMove = RPS_CHOICES.ROCK;
+  } else if (event.key === "P" || event.key === "p") {
+    playerMove = RPS_CHOICES.PAPER;
+  } else if (event.key === "S" || event.key === "s") {
+    playerMove = RPS_CHOICES.SCISSOR;
+  }
+  handleMove(playerMove);
+});
+
+function handleMove(playerMove){
+  if(!playerMove) return;
+  player.push(playerMove);
+  let compChoice = randomRPS();
+  let result = computeResult(playerMove, compChoice);
+  callReqAnimationFrame(compChoice, playerMove, result);
+  onTouch.play();
+}
+
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = window.CASINOZZ_ML || 'http://localhost:5001';
-let playerMoveHistory = [];
+const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
 let currentMode = 'easy'; // updated when mode is selected
 
-async function fetchAiMove(userChoice) {
-  playerMoveHistory.push(userChoice);
-  if (playerMoveHistory.length > 20) playerMoveHistory.shift();
+async function fetchAiMove() {
   try {
-    const res = await fetch(`${ML_BASE}/ml/ai_move`, {
+    const res = await fetch(`${ML_BASE}/ai_move`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ game: 'rps', last_moves: playerMoveHistory, difficulty: currentMode })
+      body: JSON.stringify({ game: 'rps', last_moves: player.playerMoveHistory, difficulty: currentMode })
     });
     const data = await res.json();
-    return data.ai_choice || randomRPS();
-  } catch(e) { return randomRPS(); }
+    return data.ai_choice;
+  } catch(e) {
+    console.error("Error fetching AI move:", e);
+   }
 }
 
 function randomRPS() {
-  const c = ['ROCK','PAPER','SCISSORS'];
-  return c[Math.floor(Math.random() * 3)];
+  const c = [RPS_CHOICES.ROCK, RPS_CHOICES.PAPER, RPS_CHOICES.SCISSOR];
+  const ind = getRandomInt(0, 2);
+
+  if(player.playerMoveHistory.length >= 10){
+    return fetchAiMove().then(aiChoice => {
+      return aiChoice;
+    }).catch((err) => {
+      return c[ind];
+    }); 
+  }
+  return c[ind];
 }
+
+const COUNTERS = { [RPS_CHOICES.ROCK]: RPS_CHOICES.PAPER, [RPS_CHOICES.PAPER]: RPS_CHOICES.SCISSOR, [RPS_CHOICES.SCISSOR]: RPS_CHOICES.ROCK };
+function computeResult(playerMove, cpuMove) {
+    if (playerMove === cpuMove) return RPS_RESULTS.TIE;
+    if (COUNTERS[cpuMove] === playerMove) return RPS_RESULTS.VICTORY;
+    return RPS_RESULTS.DEFEAT;
+}
+  
+
 
 //CREATING OR FETCHING THE SCORE OBJECT IN OR FROM LOCAL STORAGE
 let score = JSON.parse(localStorage.getItem("rpsScore"));
@@ -61,55 +151,7 @@ changeText(
   `Wins : ${score.wins} | Losses : ${score.losses} | Ties : ${score.ties}`,
 );
 
-//-------------EVENT LISTENER LIST--------------//
 
-//LISTEN TO THE USER INPUT FOR ROCK
-let rckBtn = document.getElementById("rock");
-rckBtn.addEventListener("click", async () => {
-  let compChoice = await fetchAiMove(RPS_CHOICES.ROCK);
-  let result = computeResult(RPS_CHOICES.ROCK, compChoice);
-  callReqAnimationFrame(compChoice, RPS_CHOICES.ROCK, result);
-  onTouch.play();
-});
-
-//LISTEN TO THE USER INPUT FOR PAPER
-let pprBtn = document.getElementById("paper");
-pprBtn.addEventListener("click", async () => {
-  let compChoice = await fetchAiMove(RPS_CHOICES.PAPER);
-  let result = computeResult(RPS_CHOICES.PAPER, compChoice);
-  callReqAnimationFrame(compChoice, RPS_CHOICES.PAPER, result);
-  onTouch.play();
-});
-
-//LISTEN TO THE USER INPUT FOR SCISSOR
-let ssrBtn = document.getElementById("scissors");
-ssrBtn.addEventListener("click", async () => {
-  let compChoice = await fetchAiMove(RPS_CHOICES.SCISSOR);
-  let result = computeResult(RPS_CHOICES.SCISSOR, compChoice);
-  callReqAnimationFrame(compChoice, RPS_CHOICES.SCISSOR, result);
-  onTouch.play();
-});
-
-//TAKE INPUT DIRECTLY FROM KEYBOARD
-document.body.addEventListener("keydown", (event) => {
-  let compChoice = compChoiceGenerator(getRandomInt(0, 2));
-  let result;
-  if (event.key === "R" || event.key === "r") {
-    result = computeResult(RPS_CHOICES.ROCK, compChoice);
-    callReqAnimationFrame(compChoice, RPS_CHOICES.ROCK, result);
-    onTouch.play();
-  } else if (event.key === "P" || event.key === "p") {
-    result = computeResult(RPS_CHOICES.PAPER, compChoice);
-    callReqAnimationFrame(compChoice, RPS_CHOICES.PAPER, result);
-    onTouch.play();
-  } else if (event.key === "S" || event.key === "s") {
-    result = computeResult(RPS_CHOICES.SCISSOR, compChoice);
-    callReqAnimationFrame(compChoice, RPS_CHOICES.SCISSOR, result);
-    onTouch.play();
-  } else if (event.key === " ") {
-    handleAutoPlay();
-  }
-});
 
 //REQUEST ANIMATION FRAME FOR SMOOTH RENDERING
 const callReqAnimationFrame = (compChoice, userChoice, result) => {
@@ -125,27 +167,7 @@ const callReqAnimationFrame = (compChoice, userChoice, result) => {
   });
 };
 
-//COMPUTER CHOICE GENERATOR BASED ON RANDOM INTEGER
-function compChoiceGenerator(compInt) {
-  if (compInt === 0) return RPS_CHOICES.ROCK;
-  else if (compInt == 1) return RPS_CHOICES.PAPER;
-  else return RPS_CHOICES.SCISSOR;
-}
-
-//COMPUTE THE RESULT BASED ON USER CHOICE AND COMPUTER CHOICE
-function computeResult(userChoice, compChoice) {
-  if (compChoice === userChoice) return RPS_RESULTS.TIE;
-  else {
-    if (
-      (compChoice === RPS_CHOICES.ROCK && userChoice === RPS_CHOICES.PAPER) ||
-      (compChoice === RPS_CHOICES.PAPER &&
-        userChoice === RPS_CHOICES.SCISSOR) ||
-      (compChoice === RPS_CHOICES.SCISSOR && userChoice === RPS_CHOICES.ROCK)
-    ) {
-      return RPS_RESULTS.VICTORY;
-    } else return RPS_RESULTS.DEFEAT;
-  }
-}
+//----RENDERING FUNCTIONS ---//
 
 //FUNCTION TO RENDER THE USER'S CHOICE ON THE SCREEN
 function renderCompChoice(computerMove) {
@@ -232,6 +254,8 @@ function renderResultEffects(result) {
   updateScoreBoard();
 }
 
+//---RENDERING FUNCTIONS END---//
+
 //RESET BUTTON FUNCTIONALITY
 let resetBtn = getElementByClass("reset-btn");
 resetBtn.addEventListener("click", () => {
@@ -274,8 +298,8 @@ function handleAutoPlay() {
   if (!isAutoPlay) {
     changeText("js-auto-play", "Pause Play");
     autoPlayID = setInterval(function () {
-      let compChoice = compChoiceGenerator(getRandomInt(0, 2));
-      let compAsUserChoice = compChoiceGenerator(getRandomInt(0, 2));
+      let compChoice = randomRPS();
+      let compAsUserChoice = randomRPS();
       let result = computeResult(compAsUserChoice, compChoice);
       callReqAnimationFrame(compChoice, compAsUserChoice, result);
       onTouch.play();
