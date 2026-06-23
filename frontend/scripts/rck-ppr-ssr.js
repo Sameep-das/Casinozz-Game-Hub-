@@ -38,11 +38,11 @@ class PlayerMove {
 
   push(playerMove) {
     if(!playerMove) return;
-    if(isFull()) {
-      this.playerMoveHistory = [];
-      this.currentIndex = 0;
+    if(this.#isFull()) {
+      this.playerMoveHistory.shift();
+      this.currentIndex--;
     }
-    playerMoveHistory.push(playerMove);
+    this.playerMoveHistory.push(playerMove);
     this.currentIndex++;
   }
 }
@@ -85,17 +85,17 @@ document.body.addEventListener("keydown", (event) => {
   handleMove(playerMove);
 });
 
-function handleMove(playerMove){
+async function handleMove(playerMove){
   if(!playerMove) return;
   player.push(playerMove);
-  let compChoice = randomRPS();
+  let compChoice = await randomRPS();
   let result = computeResult(playerMove, compChoice);
   callReqAnimationFrame(compChoice, playerMove, result);
   onTouch.play();
 }
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
+const ML_BASE = window.ML_SERVICE_URL || 'http://localhost:5001';
 let currentMode = 'easy'; // updated when mode is selected
 
 async function fetchAiMove() {
@@ -112,16 +112,17 @@ async function fetchAiMove() {
    }
 }
 
-function randomRPS() {
+
+async function randomRPS() {
   const c = [RPS_CHOICES.ROCK, RPS_CHOICES.PAPER, RPS_CHOICES.SCISSOR];
   const ind = getRandomInt(0, 2);
-
+  
   if(player.playerMoveHistory.length >= 10){
-    return fetchAiMove().then(aiChoice => {
-      return aiChoice;
-    }).catch((err) => {
+    try {
+      return await fetchAiMove();
+    } catch(e) {
       return c[ind];
-    }); 
+    }
   }
   return c[ind];
 }

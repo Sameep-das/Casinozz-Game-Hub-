@@ -8,7 +8,7 @@ const tracker = new CasinozzTracker('guess');
 tracker.startSession('medium');
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
+const ML_BASE = window.ML_SERVICE_URL || 'http://localhost:5001';
 let playerGuessHistory = [];
 let currentGuessMode = 'medium';
 

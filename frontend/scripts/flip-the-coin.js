@@ -25,7 +25,7 @@ const tracker = new CasinozzTracker('coin');
 tracker.startSession('easy');
 
 // ── Adaptive AI State ─────────────────────────────────────
-const ML_BASE = process.env.ML_SERVICE_URL || 'http://localhost:5001';
+const ML_BASE = window.ML_SERVICE_URL || 'http://localhost:5001';
 let playerCoinHistory = [];
 let currentCoinMode = 'easy';
 
